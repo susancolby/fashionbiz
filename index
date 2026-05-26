@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Page title shown in the browser tab -->
+  <title>Your Brand Name</title>
+
+  <!-- SEO description (shown in Google search results) -->
+  <meta name="description" content="A short description of your brand and what you sell.">
+
+  <!-- Google Fonts — change these to any fonts you prefer.
+       Visit fonts.google.com, pick fonts, and replace the URL below. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Shared styles — load first -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Home-specific styles -->
+  <link rel="stylesheet" href="home.css">
+
+  <!-- Favicon: replace with your own icon file -->
+  <!-- <link rel="icon" href="images/favicon.ico"> -->
+</head>
+<body>
+
+
+  <!-- ============================================================
+       NAVIGATION
+       Shared across all pages. Update links to match your pages.
+       .active class is added automatically by main.js
+       ============================================================ -->
+  <nav class="nav">
+    <div class="container">
+
+      <!-- Brand name / logo — change "Your Brand" to your name -->
+      <a href="index.html" class="nav-brand">Your Brand</a>
+
+      <!-- Desktop navigation links -->
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <!-- Add more pages here as needed -->
+      </ul>
+
+      <!-- Hamburger button — visible only on mobile -->
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav><!-- /nav -->
+
+
+  <main>
+
+    <!-- ============================================================
+         HERO SECTION
+         Full-screen banner. Replace the background-color in home.css
+         with background-image: url('images/your-hero.jpg') and
+         update the heading and paragraph text below.
+         ============================================================ -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Your Tagline Goes Here</h1>
+        <p>A short sentence about your brand — what you make, who it's for, or what makes it special.</p>
+
+        <div class="hero-actions">
+          <!-- Primary CTA — links to the shop -->
+          <a href="products.html" class="btn">Shop Now</a>
+          <!-- Secondary CTA — optional; links to about page -->
+          <a href="about.html" class="btn btn-outline">Our Story</a>
+        </div>
+      </div>
+    </section><!-- /hero -->
+
+
+    <!-- ============================================================
+         MARQUEE STRIP  (optional branding element)
+         The text is doubled so the animation loops seamlessly.
+         To remove this section, delete the entire <div> block.
+         ============================================================ -->
+    <div class="brand-strip" aria-hidden="true">
+      <!-- Duplicate the text — CSS animation scrolls it left -->
+      <span class="brand-strip-inner">
+        Your Brand &nbsp;·&nbsp; Free Shipping Over $X &nbsp;·&nbsp; New Arrivals Weekly &nbsp;·&nbsp;
+        Your Brand &nbsp;·&nbsp; Free Shipping Over $X &nbsp;·&nbsp; New Arrivals Weekly &nbsp;·&nbsp;
+        Your Brand &nbsp;·&nbsp; Free Shipping Over $X &nbsp;·&nbsp; New Arrivals Weekly &nbsp;·&nbsp;
+        Your Brand &nbsp;·&nbsp; Free Shipping Over $X &nbsp;·&nbsp; New Arrivals Weekly &nbsp;·&nbsp;
+      </span>
+    </div><!-- /brand-strip -->
+
+
+    <!-- ============================================================
+         FEATURED CATEGORIES
+         Tiles that link to the products page with a category filter.
+         Add or remove .category-tile elements as needed.
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Shop by Category</h2>
+          <p>Find exactly what you're looking for.</p>
+        </div>
+
+        <div class="categories-grid">
+
+          <!-- Each tile links to products.html with a ?category= query string.
+               products.js reads this and pre-selects the matching filter.
+               Replace the style="" background with a real image:
+               style="background-image: url('images/cat-shirts.jpg')" -->
+
+          <a href="products.html?category=shirts" class="category-tile">
+            <!-- Optional: <img src="images/cat-shirts.jpg" alt="Shirts"> -->
+            <span class="category-tile-label">Shirts</span>
+          </a>
+
+          <a href="products.html?category=pants" class="category-tile">
+            <span class="category-tile-label">Pants</span>
+          </a>
+
+          <a href="products.html?category=outerwear" class="category-tile">
+            <span class="category-tile-label">Outerwear</span>
+          </a>
+
+          <a href="products.html?category=accessories" class="category-tile">
+            <span class="category-tile-label">Accessories</span>
+          </a>
+
+          <!-- Add more category tiles here -->
+
+        </div>
+      </div>
+    </section><!-- /featured categories -->
+
+
+    <!-- ============================================================
+         FEATURED PRODUCTS
+         A hand-picked selection shown on the home page.
+         These are static cards — they don't use the filter JS.
+         To show dynamic filtered products here, move them to products.html.
+         ============================================================ -->
+    <section class="section featured-products">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>New Arrivals</h2>
+          <p>Fresh styles added this season.</p>
+        </div>
+
+        <div class="grid">
+
+          <!-- PRODUCT CARD TEMPLATE
+               Copy this block and change the content for each product.
+               The href links to the product detail page (if you build one)
+               or directly to products.html for now. -->
+
+          <article class="card">
+            <!-- Product image — replace src with your image path -->
+            <img class="card-image" src="" alt="Product name">
+            <div class="card-body">
+              <p class="card-title">Product Name</p>
+              <p class="card-price">$00.00</p>
+              <!-- Tags shown as small chips -->
+              <div class="card-tags">
+                <span class="tag">Category</span>
+                <span class="tag">Sub-type</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Duplicate the card above for each featured product -->
+          <article class="card">
+            <img class="card-image" src="" alt="Product name">
+            <div class="card-body">
+              <p class="card-title">Product Name</p>
+              <p class="card-price">$00.00</p>
+              <div class="card-tags">
+                <span class="tag">Category</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="card-image" src="" alt="Product name">
+            <div class="card-body">
+              <p class="card-title">Product Name</p>
+              <p class="card-price">$00.00</p>
+              <div class="card-tags">
+                <span class="tag">Category</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="card-image" src="" alt="Product name">
+            <div class="card-body">
+              <p class="card-title">Product Name</p>
+              <p class="card-price">$00.00</p>
+              <div class="card-tags">
+                <span class="tag">Category</span>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /grid -->
+
+        <div style="text-align: center; margin-top: calc(var(--gap) * 2);">
+          <a href="products.html" class="btn btn-outline">View All Products</a>
+        </div>
+
+      </div>
+    </section><!-- /featured products -->
+
+  </main><!-- /main -->
+
+
+  <!-- ============================================================
+       FOOTER
+       Shared across all pages. Update links and text as needed.
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <a href="about.html">About</a>
+        <!-- Add: Contact, FAQ, Returns, Instagram, etc. -->
+      </nav>
+
+      <!-- Update year and brand name -->
+      <p>&copy; 2025 Your Brand Name. All rights reserved.</p>
+
+    </div>
+  </footer><!-- /footer -->
+
+
+  <!-- Scripts — load at the bottom so HTML renders first -->
+  <!-- preview-inject.js: only does something when loaded inside the admin preview iframe -->
+  <script src="preview-inject.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>
