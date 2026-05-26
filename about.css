@@ -1,0 +1,143 @@
+/* ============================================================
+   about.css — Styles specific to about.html
+   Import AFTER style.css
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   ABOUT HERO
+   Smaller than home hero; just text and an optional image.
+   ------------------------------------------------------------ */
+.about-hero {
+  padding-block: calc(var(--gap) * 3);
+  text-align: center;
+  background-color: var(--color-surface);
+}
+
+.about-hero h1 {
+  margin-bottom: 1rem;
+}
+
+.about-hero p {
+  margin-inline: auto;
+  font-size: 1.05rem;
+}
+
+
+/* ------------------------------------------------------------
+   ABOUT BODY — two-column text + image layout
+   ------------------------------------------------------------ */
+.about-body {
+  display: grid;
+  /* Two equal columns; stacks on mobile via responsive rule below */
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--gap) * 3);
+  align-items: center;
+}
+
+.about-body img {
+  width: 100%;
+  aspect-ratio: 4 / 5;       /* Portrait — adjust as needed */
+  object-fit: cover;
+  border-radius: var(--radius);
+  background-color: var(--color-surface);  /* Shows if image is missing */
+}
+
+.about-body-text h2 {
+  margin-bottom: 1rem;
+}
+
+.about-body-text p {
+  max-width: 100%;            /* Override the global 65ch limit inside the grid */
+  margin-bottom: 1rem;
+}
+
+/* Reverses the column order for an alternate layout
+   (image right, text left). Use on a second .about-body section. */
+.about-body.reverse {
+  direction: rtl;   /* Reverses child order */
+}
+
+.about-body.reverse > * {
+  direction: ltr;   /* Restore text direction inside children */
+}
+
+
+/* ------------------------------------------------------------
+   VALUES / MISSION — icon + text rows
+   ------------------------------------------------------------ */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gap);
+  text-align: center;
+}
+
+.value-item {
+  padding: calc(var(--gap) * 1.5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* Icon placeholder — replace with <img> or an SVG icon */
+.value-icon {
+  font-size: 1.8rem;     /* Size of emoji/icon */
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.value-item h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.value-item p {
+  font-size: 0.88rem;
+  max-width: 100%;
+}
+
+
+/* ------------------------------------------------------------
+   TEAM SECTION (optional)
+   ------------------------------------------------------------ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--gap);
+  text-align: center;
+}
+
+.team-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;    /* Circle crop — change to var(--radius) for square */
+  background-color: var(--color-surface);
+  margin-bottom: 0.75rem;
+}
+
+.team-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+  text-transform: none;   /* Override h4 uppercase for names */
+  letter-spacing: 0;
+}
+
+.team-card p {
+  font-size: 0.82rem;
+}
+
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .about-body {
+    grid-template-columns: 1fr;   /* Stack image and text vertically */
+  }
+
+  /* Reset reverse layout on mobile since columns are stacked */
+  .about-body.reverse {
+    direction: ltr;
+  }
+}
