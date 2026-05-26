@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Your Brand Name</title>
+  <meta name="description" content="Learn about who we are and why we make what we make.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="about.css">
+</head>
+<body>
+
+
+  <!-- NAVIGATION (same on every page) -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-brand">Your Brand</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- ============================================================
+         ABOUT HERO
+         Short introductory banner. Update headline and copy.
+         ============================================================ -->
+    <section class="about-hero">
+      <div class="container">
+        <h1>Our Story</h1>
+        <p>A short sentence that captures your brand's purpose or founding vision.</p>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BRAND STORY — text and image side by side
+         Swap the image src for a real photo of you, your workspace,
+         your materials, etc.
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="about-body">
+
+          <!-- Left: image -->
+          <img src="" alt="Founder or brand photo">
+          <!-- If you want the image on the RIGHT, swap the order
+               of the <img> and <div> below, or add class="reverse" to .about-body -->
+
+          <!-- Right: text -->
+          <div class="about-body-text">
+            <h2>Why We Started</h2>
+
+            <!-- Write your brand story here. Each <p> is a paragraph. -->
+            <p>
+              Tell the story of how and why this brand started. What problem were you solving?
+              What gap did you see in the market? What personal experience led you here?
+            </p>
+            <p>
+              Continue your story. What drives you to keep making things? What do you care
+              about most — quality, sustainability, style, affordability?
+            </p>
+            <p>
+              A third paragraph if needed. Keep it human and honest — people buy from brands
+              they feel connected to.
+            </p>
+
+            <a href="products.html" class="btn" style="margin-top: 1.5rem;">Shop the Collection</a>
+          </div>
+
+        </div>
+      </div>
+    </section><!-- /brand story -->
+
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         VALUES / WHAT WE STAND FOR
+         Customize the icons (emoji work fine), titles, and descriptions.
+         Add or remove .value-item blocks as needed.
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>What We Stand For</h2>
+          <p>The principles behind every piece we make.</p>
+        </div>
+
+        <div class="values-grid">
+
+          <div class="value-item">
+            <!-- Replace the emoji with an SVG icon, image, or keep as emoji -->
+            <span class="value-icon">✦</span>
+            <h3>Quality First</h3>
+            <p>Short description of your commitment to quality — materials, construction, etc.</p>
+          </div>
+
+          <div class="value-item">
+            <span class="value-icon">○</span>
+            <h3>Timeless Design</h3>
+            <p>A short sentence about your design philosophy — minimalist, classic, bold, etc.</p>
+          </div>
+
+          <div class="value-item">
+            <span class="value-icon">◇</span>
+            <h3>Sustainability</h3>
+            <p>Your commitment to ethical sourcing, low waste, or conscious production.</p>
+          </div>
+
+          <div class="value-item">
+            <span class="value-icon">△</span>
+            <h3>Community</h3>
+            <p>How you engage with your customers and give back.</p>
+          </div>
+
+          <!-- Add or remove .value-item blocks freely -->
+
+        </div>
+      </div>
+    </section><!-- /values -->
+
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         TEAM (optional)
+         Remove this whole section if it's a solo brand.
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>The Team</h2>
+          <p>The people behind the brand.</p>
+        </div>
+
+        <div class="team-grid">
+
+          <div class="team-card">
+            <!-- Replace src with a photo. Use a square crop for the circle effect. -->
+            <img src="" alt="Founder name">
+            <h4>Founder Name</h4>
+            <p>Founder & Designer</p>
+          </div>
+
+          <!-- Add more team members as needed -->
+          <!-- <div class="team-card">
+            <img src="" alt="Team member name">
+            <h4>Name</h4>
+            <p>Role</p>
+          </div> -->
+
+        </div>
+      </div>
+    </section><!-- /team -->
+
+
+    <!-- ============================================================
+         CONTACT / CLOSING CTA
+         A simple call to action at the bottom of the about page.
+         ============================================================ -->
+    <section class="section" style="text-align: center; background-color: var(--color-surface);">
+      <div class="container">
+        <h2>Get in Touch</h2>
+        <p style="margin-inline: auto; margin-top: 0.75rem; margin-bottom: 2rem;">
+          Questions, wholesale inquiries, or just want to say hello?
+          <!-- Replace with your actual email -->
+          Email us at <a href="mailto:hello@yourbrand.com" style="text-decoration: underline;">hello@yourbrand.com</a>
+        </p>
+        <a href="products.html" class="btn">Shop the Collection</a>
+      </div>
+    </section><!-- /cta -->
+
+  </main>
+
+
+  <!-- FOOTER (same on every page) -->
+  <footer class="footer">
+    <div class="container">
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p>&copy; 2025 Your Brand Name. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script src="preview-inject.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>
