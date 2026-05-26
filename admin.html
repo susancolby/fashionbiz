@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Admin page title — keep vague so it's not obvious in browser history -->
+  <title>Site Admin</title>
+
+  <!-- NO link to any public page fonts — admin uses system fonts (faster, plainer) -->
+
+  <link rel="stylesheet" href="admin.css">
+
+  <!--
+    SECURITY REMINDERS:
+    1. Never link to this page from index.html, products.html, or about.html.
+    2. The URL is your first line of defense — use something non-obvious
+       like "panel-7x3k.html" instead of "admin.html" when you deploy.
+    3. On GitHub Pages, everything in the repo is technically public.
+       If you want real security, move to a hosting platform that supports
+       server-side code (Netlify Functions, Vercel, Railway, etc.).
+  -->
+</head>
+<body>
+
+
+  <!-- ============================================================
+       LOGIN SCREEN
+       Shown before authentication. Hidden after correct password.
+       ============================================================ -->
+  <div id="login-screen">
+    <div class="login-box">
+      <h1>Admin Panel</h1>
+      <p>Enter your password to continue.</p>
+
+      <!-- type="password" masks the input -->
+      <input type="password" id="password-input" placeholder="Password" autofocus>
+
+      <button class="btn-admin btn-admin-primary" style="width:100%" onclick="attemptLogin()">
+        Sign In
+      </button>
+
+      <!-- Error message shown on wrong password -->
+      <p id="login-error"></p>
+    </div>
+  </div><!-- /login-screen -->
+
+
+  <!-- ============================================================
+       ADMIN SHELL
+       Hidden until login succeeds. JS adds class="visible" to show it.
+       ============================================================ -->
+  <div id="admin-shell">
+
+    <!-- ---- Top Navigation Bar ---- -->
+    <nav class="admin-nav">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span class="admin-nav-brand">Admin Panel</span>
+        <!-- Red "ADMIN" badge so it's always clear this is not the live site -->
+        <span class="admin-nav-badge">Admin</span>
+      </div>
+
+      <div class="admin-nav-right">
+        <!-- Opens the live site in a new tab -->
+        <button onclick="window.open('index.html', '_blank')">
+          ↗ View Live Site
+        </button>
+        <button onclick="logout()">Sign Out</button>
+      </div>
+    </nav><!-- /admin-nav -->
+
+
+    <!-- ---- Body: Sidebar + Content ---- -->
+    <div class="admin-body">
+
+      <!-- ---- Sidebar Navigation ---- -->
+      <aside class="admin-sidebar">
+
+        <p class="sidebar-section-label">Manage</p>
+
+        <!-- Each item: onclick calls showPanel(panelId, this) -->
+        <div class="sidebar-item active" onclick="showPanel('panel-products', this)">
+          <span class="sidebar-icon">📦</span>
+          Products
+          <!-- Live product count badge — updated by JS -->
+          <span id="product-count" style="margin-left:auto; font-size:0.75rem; color:var(--admin-muted)"></span>
+        </div>
+
+        <p class="sidebar-section-label">Design</p>
+
+        <div class="sidebar-item" onclick="showPanel('panel-appearance', this); initAppearancePanel();">
+          <span class="sidebar-icon">🎨</span>
+          Appearance
+        </div>
+
+        <p class="sidebar-section-label">Site</p>
+
+        <div class="sidebar-item" onclick="showPanel('panel-export', this); generateProductsHTML();">
+          <span class="sidebar-icon">📋</span>
+          Export HTML
+        </div>
+
+        <div class="sidebar-item" onclick="showPanel('panel-settings', this)">
+          <span class="sidebar-icon">⚙️</span>
+          Settings
+        </div>
+
+      </aside><!-- /admin-sidebar -->
+
+
+      <!-- ============================================================
+           MAIN CONTENT AREA
+           Each .admin-panel corresponds to a sidebar item.
+           Only one is visible at a time (controlled by showPanel()).
+           ============================================================ -->
+      <main class="admin-content">
+
+
+        <!-- ===========================================================
+             PANEL: PRODUCTS
+             Add, edit, and delete products. Changes save to localStorage.
+             =========================================================== -->
+        <div id="panel-products" class="admin-panel active">
+
+          <div class="panel-header">
+            <h2>Products</h2>
+          </div>
+
+
+          <!-- ---- ADD / EDIT FORM ---- -->
+          <div class="form-card" id="product-form-card">
+            <p class="form-card-title" id="form-card-title">Add New Product</p>
+
+            <!-- Hidden field stores the id when editing an existing product -->
+            <input type="hidden" id="f-edit-id">
+
+            <div class="form-grid">
+
+              <!-- Product Name -->
+              <div class="field-group">
+                <label for="f-name">Product Name *</label>
+                <input type="text" id="f-name" placeholder="e.g. Classic Long Sleeve">
+              </div>
+
+              <!-- Price -->
+              <div class="field-group">
+                <label for="f-price">Price ($) *</label>
+                <input type="number" id="f-price" min="0" step="0.01" placeholder="e.g. 49.99">
+              </div>
+
+              <!-- Category -->
+              <div class="field-group">
+                <label for="f-category">Category</label>
+                <!--
+                  CUSTOMIZING CATEGORIES:
+                  Update these <option> values to match the filter checkboxes
+                  in products.html. The value must be lowercase with no spaces
+                  (use hyphens if needed, e.g. "t-shirts").
+                -->
+                <select id="f-category">
+                  <option value="">— Select category —</option>
+                  <option value="shirts">Shirts</option>
+                  <option value="pants">Pants</option>
+                  <option value="outerwear">Outerwear</option>
+                  <option value="accessories">Accessories</option>
+                  <!-- Add your own categories here -->
+                </select>
+              </div>
+
+              <!-- Image URL -->
+              <div class="field-group">
+                <label for="f-image">Image URL or Path</label>
+                <input type="text" id="f-image" placeholder="e.g. images/shirt-01.jpg">
+                <span class="field-hint">Relative path to an image file in your project, or a full URL.</span>
+              </div>
+
+              <!-- Sizes (comma-separated) -->
+              <div class="field-group">
+                <label for="f-sizes">Available Sizes</label>
+                <input type="text" id="f-sizes" placeholder="e.g. S,M,L,XL">
+                <span class="field-hint">Comma-separated. Must match filter values in products.html (S, M, L, XL, XXL, etc.).</span>
+              </div>
+
+              <!-- Colors (comma-separated) -->
+              <div class="field-group">
+                <label for="f-colors">Colors</label>
+                <input type="text" id="f-colors" placeholder="e.g. black,white,navy">
+                <span class="field-hint">
+                  Comma-separated. Use these exact names to match the swatches:
+                  black, white, grey, navy, beige, red, green, blue, pink, yellow, brown, orange, purple.
+                </span>
+              </div>
+
+              <!-- Tags / Sub-types (comma-separated) -->
+              <div class="field-group form-full">
+                <label for="f-tags">Tags / Sub-types</label>
+                <input type="text" id="f-tags" placeholder="e.g. long-sleeve,slim-fit,button-down">
+                <span class="field-hint">
+                  Comma-separated. These are the sub-type tags that appear in the Style filter
+                  in products.html (e.g. long-sleeve, short-sleeve, slim-fit, relaxed-fit).
+                  You can add any tag here — just also add a matching checkbox in products.html.
+                </span>
+              </div>
+
+            </div><!-- /form-grid -->
+
+            <div class="form-actions">
+              <!-- Cancel Edit button (hidden when adding) -->
+              <button id="btn-cancel-edit"
+                      class="btn-admin btn-admin-ghost"
+                      style="display:none"
+                      onclick="resetForm()">
+                Cancel
+              </button>
+              <!-- Save Edit button (hidden when adding) -->
+              <button id="btn-save-edit"
+                      class="btn-admin btn-admin-success"
+                      style="display:none"
+                      onclick="saveEdit()">
+                ✓ Save Changes
+              </button>
+              <!-- Add Product button (shown when adding) -->
+              <button id="btn-add-product"
+                      class="btn-admin btn-admin-primary"
+                      onclick="addProduct()">
+                + Add Product
+              </button>
+            </div>
+
+          </div><!-- /form-card -->
+
+
+          <!-- ---- PRODUCT TABLE ---- -->
+          <div class="form-card" style="padding:0; overflow:hidden;">
+            <div class="product-table-wrap">
+              <table class="product-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Colors</th>
+                    <th>Tags</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody">
+                  <!-- Populated by renderProductTable() in admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div><!-- /product-table card -->
+
+        </div><!-- /panel-products -->
+
+
+        <!-- ===========================================================
+             PANEL: APPEARANCE
+             Edit CSS variables with a live preview of the public site.
+             =========================================================== -->
+        <div id="panel-appearance" class="admin-panel">
+
+          <div class="panel-header">
+            <h2>Appearance</h2>
+            <div style="display:flex; gap:8px;">
+              <button class="btn-admin btn-admin-ghost" onclick="resetAppearance()">Reset Defaults</button>
+              <button class="btn-admin btn-admin-primary" onclick="copyCSSExport()">Copy CSS</button>
+            </div>
+          </div>
+
+          <!-- Color and spacing controls -->
+          <div class="appearance-grid">
+
+            <!-- Colors Card -->
+            <div class="appearance-card">
+              <h3>Colors</h3>
+
+              <!-- One .var-row per color variable.
+                   The input id must match the id in CSS_VARS in admin.js. -->
+
+              <div class="var-row">
+                <div class="var-label">
+                  Page Background
+                  <small>--color-bg</small>
+                </div>
+                <input type="color" id="v-bg">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Primary Text
+                  <small>--color-text</small>
+                </div>
+                <input type="color" id="v-text">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Muted Text
+                  <small>--color-muted</small>
+                </div>
+                <input type="color" id="v-muted">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Borders
+                  <small>--color-border</small>
+                </div>
+                <input type="color" id="v-border">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Accent (buttons, links)
+                  <small>--color-accent</small>
+                </div>
+                <input type="color" id="v-accent">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Accent Hover
+                  <small>--color-accent-hover</small>
+                </div>
+                <input type="color" id="v-accent-hover">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Card / Surface Background
+                  <small>--color-surface</small>
+                </div>
+                <input type="color" id="v-surface">
+              </div>
+
+            </div><!-- /colors card -->
+
+
+            <!-- Layout & Spacing Card -->
+            <div class="appearance-card">
+              <h3>Layout &amp; Spacing</h3>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Base Gap / Spacing
+                  <small>--gap</small>
+                </div>
+                <input type="text" id="v-gap" placeholder="24px">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Border Radius
+                  <small>--radius</small>
+                </div>
+                <input type="text" id="v-radius" placeholder="4px">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Max Content Width
+                  <small>--max-width</small>
+                </div>
+                <input type="text" id="v-max-width" placeholder="1200px">
+              </div>
+
+              <div class="var-row">
+                <div class="var-label">
+                  Nav Bar Height
+                  <small>--nav-height</small>
+                </div>
+                <input type="text" id="v-nav-height" placeholder="64px">
+              </div>
+
+              <p style="font-size:0.75rem; color:var(--admin-muted); margin-top: 16px; line-height:1.5;">
+                After adjusting, click <strong>Copy CSS</strong> and paste the
+                output into the <code>:root { }</code> block at the top of
+                <strong>style.css</strong> to make changes permanent.
+              </p>
+
+            </div><!-- /layout card -->
+
+          </div><!-- /appearance-grid -->
+
+
+          <!-- ---- Live Preview ---- -->
+          <div class="form-card">
+            <p class="form-card-title">Live Preview</p>
+
+            <!-- Preview controls bar -->
+            <div class="preview-bar">
+              <label>Device:</label>
+
+              <!-- Device size buttons — data-size matches setPreviewSize() argument -->
+              <button class="preview-size-btn active" data-size="desktop" onclick="setPreviewSize('desktop')">
+                🖥 Desktop
+              </button>
+              <button class="preview-size-btn" data-size="tablet" onclick="setPreviewSize('tablet')">
+                📱 Tablet (768px)
+              </button>
+              <button class="preview-size-btn" data-size="mobile" onclick="setPreviewSize('mobile')">
+                📱 Mobile (390px)
+              </button>
+
+              <label style="margin-left:auto;">Page:</label>
+              <!-- Which page to preview — changing this reloads the iframe -->
+              <select class="preview-page-select" id="preview-page" onchange="refreshPreview()">
+                <option value="index.html">Home</option>
+                <option value="products.html">Shop</option>
+                <option value="about.html">About</option>
+              </select>
+
+              <button class="btn-admin btn-admin-ghost" onclick="refreshPreview()">⟳ Refresh</button>
+            </div>
+
+            <!-- The iframe that shows the live site preview.
+                 preview-inject.js (loaded on each public page) reads the
+                 CSS variable params from the URL and applies them. -->
+            <div class="preview-wrap desktop">
+              <iframe id="preview-frame"
+                      src="index.html?preview=1"
+                      title="Site preview"
+                      sandbox="allow-scripts allow-same-origin">
+              </iframe>
+            </div>
+
+          </div><!-- /preview form-card -->
+
+
+          <!-- ---- CSS Export ---- -->
+          <div class="form-card">
+            <p class="form-card-title">
+              Export CSS
+              <span style="font-weight:400; font-size:0.8rem; color:var(--admin-muted); margin-left:8px;">
+                Copy this and paste it into the <code>:root { }</code> block in style.css
+              </span>
+            </p>
+            <!-- Populated by generateCSSExport() in admin.js -->
+            <pre class="code-output" id="css-export-output"></pre>
+          </div>
+
+        </div><!-- /panel-appearance -->
+
+
+        <!-- ===========================================================
+             PANEL: EXPORT HTML
+             Shows the generated product card HTML to paste into products.html.
+             =========================================================== -->
+        <div id="panel-export" class="admin-panel">
+
+          <div class="panel-header">
+            <h2>Export Product HTML</h2>
+            <button class="btn-admin btn-admin-primary" onclick="
+              navigator.clipboard.writeText(document.getElementById('html-output').textContent)
+                .then(() => showToast('Copied!', 'success'))
+                .catch(() => showToast('Copy failed — select text manually.', 'error'))
+            ">
+              Copy HTML
+            </button>
+          </div>
+
+          <div class="form-card">
+            <p class="form-card-title">How to use this</p>
+            <ol style="font-size:0.85rem; line-height:2; padding-left:1.2rem; color:var(--admin-muted);">
+              <li>Add or edit products in the <strong>Products</strong> panel.</li>
+              <li>Come back here and click <strong>Copy HTML</strong>.</li>
+              <li>Open <strong>products.html</strong> in your code editor.</li>
+              <li>Find the comment <code>&lt;!-- ADD MORE PRODUCTS BELOW --&gt;</code> inside the <code>.product-grid</code> div.</li>
+              <li>Replace the entire contents of <code>.product-grid</code> (all the <code>&lt;article&gt;</code> blocks) with the copied HTML.</li>
+              <li>Save the file and push to GitHub.</li>
+            </ol>
+          </div>
+
+          <!-- Generated HTML output -->
+          <pre class="code-output" id="html-output" style="max-height: 600px; overflow-y:auto;">
+<!-- Populated by generateProductsHTML() in admin.js -->
+          </pre>
+
+        </div><!-- /panel-export -->
+
+
+        <!-- ===========================================================
+             PANEL: SETTINGS
+             =========================================================== -->
+        <div id="panel-settings" class="admin-panel">
+
+          <div class="panel-header">
+            <h2>Settings</h2>
+          </div>
+
+
+          <!-- Change Password -->
+          <div class="settings-section">
+            <h3>Change Password</h3>
+
+            <div class="form-grid" style="max-width:500px;">
+              <div class="field-group form-full">
+                <label for="s-current-pw">Current Password</label>
+                <input type="password" id="s-current-pw" placeholder="Current password">
+              </div>
+              <div class="field-group">
+                <label for="s-new-pw">New Password</label>
+                <input type="password" id="s-new-pw" placeholder="At least 6 characters">
+              </div>
+              <div class="field-group">
+                <label for="s-confirm-pw">Confirm New Password</label>
+                <input type="password" id="s-confirm-pw" placeholder="Repeat new password">
+              </div>
+            </div>
+
+            <div style="margin-top:var(--admin-gap);">
+              <button class="btn-admin btn-admin-primary" onclick="changePassword()">
+                Update Password
+              </button>
+            </div>
+
+            <p style="margin-top:1rem; font-size:0.78rem; color:var(--admin-muted); line-height:1.6;">
+              The password is stored in your browser's localStorage.
+              It persists across sessions on this device. If you clear your
+              browser data, it resets to the <code>DEFAULT_PASSWORD</code>
+              set at the top of <strong>admin.js</strong>.
+            </p>
+          </div>
+
+
+          <!-- Data Backup -->
+          <div class="settings-section">
+            <h3>Backup &amp; Restore</h3>
+            <p style="font-size:0.83rem; color:var(--admin-muted); margin-bottom:var(--admin-gap); line-height:1.6;">
+              Export a JSON file containing all your products and appearance settings.
+              You can import it later to restore your data (e.g. after clearing browser storage
+              or switching computers).
+            </p>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn-admin btn-admin-primary" onclick="exportData()">
+                ↓ Export Backup
+              </button>
+
+              <!-- File input for import — styled as a button -->
+              <label class="btn-admin btn-admin-ghost" style="cursor:pointer;">
+                ↑ Import Backup
+                <!-- type="file" hidden behind the label -->
+                <input type="file" accept=".json" onchange="importData(event)"
+                       style="display:none">
+              </label>
+            </div>
+          </div>
+
+
+          <!-- Danger Zone -->
+          <div class="settings-section" style="border-color: #fca5a5;">
+            <h3 style="color:var(--admin-danger);">Danger Zone</h3>
+            <p style="font-size:0.83rem; color:var(--admin-muted); margin-bottom:var(--admin-gap);">
+              These actions are irreversible. Export a backup first.
+            </p>
+            <button class="btn-admin btn-admin-danger" onclick="clearAllData()">
+              🗑 Clear All Data
+            </button>
+          </div>
+
+        </div><!-- /panel-settings -->
+
+      </main><!-- /admin-content -->
+    </div><!-- /admin-body -->
+  </div><!-- /admin-shell -->
+
+
+  <!-- Toast notification (populated and shown by showToast() in admin.js) -->
+  <div id="toast"></div>
+
+
+  <!-- Admin script — only loaded on this page -->
+  <script src="admin.js"></script>
+
+</body>
+</html>
