@@ -1,0 +1,245 @@
+/* ============================================================
+   products.css — Styles specific to products.html
+   Import AFTER style.css
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   PAGE HEADER
+   Top banner with the page title.
+   ------------------------------------------------------------ */
+.page-header {
+  padding-block: calc(var(--gap) * 2);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.page-header p {
+  margin-inline: auto;
+  margin-top: 0.5rem;
+}
+
+
+/* ------------------------------------------------------------
+   PRODUCTS LAYOUT
+   Sidebar (filters) + main grid in a two-column layout.
+   ------------------------------------------------------------ */
+.products-layout {
+  display: grid;
+  /* Sidebar: fixed 240px | Main: takes remaining space */
+  grid-template-columns: 240px 1fr;
+  gap: calc(var(--gap) * 2);
+  padding-block: calc(var(--gap) * 2);
+}
+
+
+/* ------------------------------------------------------------
+   FILTER SIDEBAR
+   ------------------------------------------------------------ */
+.filter-sidebar {
+  /* Stays at the top while scrolling */
+  position: sticky;
+  top: calc(var(--nav-height) + var(--gap));  /* Below nav + small breathing room */
+  align-self: start;    /* Required for sticky inside a grid */
+  height: fit-content;
+}
+
+/* Each filter group (e.g. "Category", "Price") */
+.filter-group {
+  margin-bottom: calc(var(--gap) * 1.5);
+}
+
+.filter-group-title {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Individual filter options (checkboxes) */
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: var(--color-accent);   /* Checkbox tick color */
+}
+
+/* Color swatch buttons */
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+/* JS adds .selected when a swatch is active */
+.swatch.selected,
+.swatch:hover {
+  border-color: var(--color-accent);
+}
+
+/* Price range inputs side by side */
+.price-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* "Clear filters" button */
+.btn-clear {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: var(--gap);
+}
+
+.btn-clear:hover {
+  color: var(--color-text);
+}
+
+
+/* ------------------------------------------------------------
+   PRODUCTS MAIN AREA
+   ------------------------------------------------------------ */
+
+/* Top bar: result count + sort dropdown */
+.products-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap);
+}
+
+.result-count {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.sort-select {
+  width: auto;      /* Don't stretch to full width */
+  min-width: 180px;
+}
+
+/* "No results" message when filters match nothing */
+.no-results {
+  grid-column: 1 / -1;    /* Span all grid columns */
+  text-align: center;
+  padding-block: calc(var(--gap) * 3);
+  color: var(--color-muted);
+}
+
+/* Hidden state — JS toggles this to hide/show product cards */
+.product-card.hidden {
+  display: none;
+}
+
+
+/* ------------------------------------------------------------
+   ACTIVE FILTER CHIPS
+   Tags showing which filters are currently active.
+   ------------------------------------------------------------ */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--gap);
+}
+
+.active-filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  background-color: var(--color-surface);
+}
+
+/* × remove button inside each chip */
+.active-filter-chip button {
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--color-muted);
+  transition: color var(--transition);
+}
+
+.active-filter-chip button:hover {
+  color: var(--color-text);
+}
+
+
+/* ------------------------------------------------------------
+   RESPONSIVE — Collapse sidebar on mobile
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+
+  /* Stack sidebar above the grid */
+  .products-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Un-stick the sidebar on mobile */
+  .filter-sidebar {
+    position: static;
+  }
+
+  /* Collapsible filter sidebar on mobile */
+  .filter-body {
+    display: none;    /* Hidden by default on mobile */
+  }
+
+  /* JS adds .open to show filters */
+  .filter-body.open {
+    display: block;
+  }
+
+  /* "Filters" toggle button shown only on mobile */
+  .filter-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem var(--gap);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-bottom: var(--gap);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background-color: var(--color-surface);
+  }
+}
+
+/* Hide toggle button on desktop */
+@media (min-width: 769px) {
+  .filter-toggle-btn {
+    display: none;
+  }
+}
