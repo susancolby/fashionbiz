@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Your Brand Name</title>
+  <meta name="description" content="Browse the full collection.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="products.css">
+</head>
+<body>
+
+
+  <!-- NAVIGATION (same on every page) -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-brand">Your Brand</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="container">
+        <h1>Shop</h1>
+        <p>Browse the full collection.</p>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="products-layout">
+
+
+        <!-- ============================================================
+             FILTER SIDEBAR
+             Each .filter-group is one filter type.
+             To add a new filter type, copy a group, change the
+             data-filter attribute, and add a matching case in products.js.
+             ============================================================ -->
+        <aside class="filter-sidebar">
+
+          <!-- Mobile toggle button — hidden on desktop via CSS -->
+          <button class="filter-toggle-btn">
+            <span class="toggle-label">Show Filters</span>
+            <span>&#9660;</span>  <!-- Down arrow -->
+          </button>
+
+          <!-- Wrap all filter groups in .filter-body so mobile can collapse them -->
+          <div class="filter-body">
+
+            <!-- ---------------------------------------------------
+                 FILTER GROUP: CATEGORY
+                 data-filter="category" must match a key in activeFilters
+                 value must match data-category on product cards
+                 --------------------------------------------------- -->
+            <div class="filter-group">
+              <p class="filter-group-title">Category</p>
+              <!-- Add one .filter-option per category -->
+              <label class="filter-option">
+                <input type="checkbox" data-filter="category" value="shirts">
+                Shirts
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="category" value="pants">
+                Pants
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="category" value="outerwear">
+                Outerwear
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="category" value="accessories">
+                Accessories
+              </label>
+              <!-- Add more categories here -->
+            </div>
+
+
+            <!-- ---------------------------------------------------
+                 FILTER GROUP: TAGS (sub-types)
+                 Tags let you filter within a category.
+                 e.g. under Shirts: long-sleeve, short-sleeve, button-down
+                 value must match a value in data-tags on product cards.
+                 Multiple tag values are comma-separated in data-tags.
+                 --------------------------------------------------- -->
+            <div class="filter-group">
+              <p class="filter-group-title">Style</p>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="tag" value="long-sleeve">
+                Long Sleeve
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="tag" value="short-sleeve">
+                Short Sleeve
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="tag" value="button-down">
+                Button Down
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="tag" value="slim-fit">
+                Slim Fit
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="tag" value="relaxed-fit">
+                Relaxed Fit
+              </label>
+              <!-- Add more sub-type tags here -->
+            </div>
+
+
+            <!-- ---------------------------------------------------
+                 FILTER GROUP: SIZE
+                 value must match values in data-sizes on product cards.
+                 data-sizes supports multiple values: data-sizes="S,M,L"
+                 --------------------------------------------------- -->
+            <div class="filter-group">
+              <p class="filter-group-title">Size</p>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="XS">XS
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="S">S
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="M">M
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="L">L
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="XL">XL
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter="size" value="XXL">XXL
+              </label>
+            </div>
+
+
+            <!-- ---------------------------------------------------
+                 FILTER GROUP: COLOR SWATCHES
+                 data-color must match values in data-colors on product cards.
+                 Set the background-color of each .swatch to match the actual color.
+                 --------------------------------------------------- -->
+            <div class="filter-group">
+              <p class="filter-group-title">Color</p>
+              <div class="color-swatches">
+                <!-- style="background-color:" sets the visual swatch color -->
+                <!-- data-color is the value matched against product data -->
+                <button class="swatch" data-color="black"  style="background-color: #111111;" aria-label="Black"></button>
+                <button class="swatch" data-color="white"  style="background-color: #ffffff; border-color: #ddd;" aria-label="White"></button>
+                <button class="swatch" data-color="grey"   style="background-color: #888888;" aria-label="Grey"></button>
+                <button class="swatch" data-color="navy"   style="background-color: #1a2e50;" aria-label="Navy"></button>
+                <button class="swatch" data-color="beige"  style="background-color: #d4c5a9;" aria-label="Beige"></button>
+                <button class="swatch" data-color="red"    style="background-color: #c0392b;" aria-label="Red"></button>
+                <button class="swatch" data-color="green"  style="background-color: #27ae60;" aria-label="Green"></button>
+                <!-- Add more colors as needed -->
+              </div>
+            </div>
+
+
+            <!-- ---------------------------------------------------
+                 FILTER GROUP: PRICE RANGE
+                 Min and max price inputs. Leave either blank for no limit.
+                 --------------------------------------------------- -->
+            <div class="filter-group">
+              <p class="filter-group-title">Price</p>
+              <div class="price-range">
+                <div class="form-group">
+                  <label for="price-min">Min ($)</label>
+                  <input type="number" id="price-min" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <label for="price-max">Max ($)</label>
+                  <input type="number" id="price-max" min="0" placeholder="500">
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Clear all filters button -->
+            <button class="btn-clear">Clear All Filters</button>
+
+          </div><!-- /filter-body -->
+        </aside><!-- /filter-sidebar -->
+
+
+        <!-- ============================================================
+             PRODUCTS MAIN AREA
+             ============================================================ -->
+        <div>
+
+          <!-- Active filter chips — populated by JS -->
+          <div class="active-filters" aria-live="polite"></div>
+
+          <!-- Toolbar: result count + sort -->
+          <div class="products-toolbar">
+            <span class="result-count" aria-live="polite">Loading…</span>
+
+            <!-- Sort dropdown — values must match cases in products.js sortProducts() -->
+            <select class="sort-select" aria-label="Sort products">
+              <option value="default">Sort: Default</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A–Z</option>
+              <option value="name-desc">Name: Z–A</option>
+            </select>
+          </div>
+
+          <!-- ======================================================
+               PRODUCT GRID
+               Each <article> is one product card.
+
+               DATA ATTRIBUTES — these drive the filter logic:
+                 data-category : one category slug (e.g. "shirts")
+                 data-sizes    : comma-separated available sizes (e.g. "S,M,L")
+                 data-colors   : comma-separated colors (e.g. "black,white")
+                 data-tags     : comma-separated sub-type tags (e.g. "long-sleeve,slim-fit")
+                 data-price    : numeric price used for sorting and range filter (e.g. "49.99")
+                 data-name     : product name used for alphabetical sort
+
+               TO ADD A PRODUCT: Copy one <article> block, update all
+               data-* attributes and the visible content. No JS needed.
+               ====================================================== -->
+          <div class="grid product-grid">
+
+
+            <!-- EXAMPLE PRODUCT 1 -->
+            <article class="card product-card"
+              data-category="shirts"
+              data-sizes="S,M,L,XL"
+              data-colors="black,white"
+              data-tags="long-sleeve,slim-fit"
+              data-price="59.99"
+              data-name="Classic Long Sleeve">
+
+              <!-- Replace src with your image path; update alt text -->
+              <img class="card-image" src="" alt="Classic Long Sleeve Shirt">
+
+              <div class="card-body">
+                <p class="card-title">Classic Long Sleeve</p>
+                <p class="card-price">$59.99</p>
+                <div class="card-tags">
+                  <span class="tag">Shirts</span>
+                  <span class="tag">Long Sleeve</span>
+                  <span class="tag">Slim Fit</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- EXAMPLE PRODUCT 2 -->
+            <article class="card product-card"
+              data-category="shirts"
+              data-sizes="XS,S,M"
+              data-colors="white,beige"
+              data-tags="short-sleeve,button-down"
+              data-price="44.99"
+              data-name="Linen Button Down">
+
+              <img class="card-image" src="" alt="Linen Button Down Shirt">
+              <div class="card-body">
+                <p class="card-title">Linen Button Down</p>
+                <p class="card-price">$44.99</p>
+                <div class="card-tags">
+                  <span class="tag">Shirts</span>
+                  <span class="tag">Short Sleeve</span>
+                  <span class="tag">Button Down</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- EXAMPLE PRODUCT 3 -->
+            <article class="card product-card"
+              data-category="pants"
+              data-sizes="S,M,L,XL,XXL"
+              data-colors="navy,black"
+              data-tags="slim-fit"
+              data-price="79.99"
+              data-name="Slim Chino">
+
+              <img class="card-image" src="" alt="Slim Chino Pants">
+              <div class="card-body">
+                <p class="card-title">Slim Chino</p>
+                <p class="card-price">$79.99</p>
+                <div class="card-tags">
+                  <span class="tag">Pants</span>
+                  <span class="tag">Slim Fit</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- EXAMPLE PRODUCT 4 -->
+            <article class="card product-card"
+              data-category="outerwear"
+              data-sizes="M,L,XL"
+              data-colors="grey,beige"
+              data-tags="relaxed-fit"
+              data-price="149.99"
+              data-name="Wool Overcoat">
+
+              <img class="card-image" src="" alt="Wool Overcoat">
+              <div class="card-body">
+                <p class="card-title">Wool Overcoat</p>
+                <p class="card-price">$149.99</p>
+                <div class="card-tags">
+                  <span class="tag">Outerwear</span>
+                  <span class="tag">Relaxed Fit</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- EXAMPLE PRODUCT 5 -->
+            <article class="card product-card"
+              data-category="accessories"
+              data-sizes=""
+              data-colors="black,navy"
+              data-tags=""
+              data-price="24.99"
+              data-name="Canvas Tote">
+
+              <img class="card-image" src="" alt="Canvas Tote Bag">
+              <div class="card-body">
+                <p class="card-title">Canvas Tote</p>
+                <p class="card-price">$24.99</p>
+                <div class="card-tags">
+                  <span class="tag">Accessories</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- EXAMPLE PRODUCT 6 -->
+            <article class="card product-card"
+              data-category="shirts"
+              data-sizes="S,M,L"
+              data-colors="red,black,white"
+              data-tags="short-sleeve,relaxed-fit"
+              data-price="34.99"
+              data-name="Relaxed Tee">
+
+              <img class="card-image" src="" alt="Relaxed Tee">
+              <div class="card-body">
+                <p class="card-title">Relaxed Tee</p>
+                <p class="card-price">$34.99</p>
+                <div class="card-tags">
+                  <span class="tag">Shirts</span>
+                  <span class="tag">Short Sleeve</span>
+                </div>
+              </div>
+            </article>
+
+
+            <!-- ===================================================
+                 ADD MORE PRODUCTS BELOW
+                 Copy the block above, fill in data-* attributes,
+                 add your image src, update the text content.
+                 =================================================== -->
+
+
+          </div><!-- /product-grid -->
+        </div><!-- /products main area -->
+
+      </div><!-- /products-layout -->
+    </div><!-- /container -->
+
+  </main>
+
+
+  <!-- FOOTER (same on every page) -->
+  <footer class="footer">
+    <div class="container">
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p>&copy; 2025 Your Brand Name. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script src="preview-inject.js"></script>
+  <script src="main.js"></script>
+  <!-- Products filter/sort logic — only needed on this page -->
+  <script src="products.js"></script>
+
+  <!-- PRE-SELECT A CATEGORY FROM URL
+       This lets you link directly to a filtered view.
+       e.g. products.html?category=shirts will auto-check the Shirts filter.
+       No changes needed here — this is read from the URL automatically. -->
+  <script>
+    // Read ?category= from the URL and check the matching checkbox on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');  // e.g. "shirts"
+      if (cat) {
+        const cb = document.querySelector(
+          '.filter-option input[data-filter="category"][value="' + cat + '"]'
+        );
+        if (cb) {
+          cb.checked = true;
+          cb.dispatchEvent(new Event('change'));  // Trigger the filter logic
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
