@@ -151,75 +151,111 @@
               <!-- Category -->
               <div class="field-group">
                 <label for="f-category">Category</label>
-                <!--
-                  CUSTOMIZING CATEGORIES:
-                  Update these <option> values to match the filter checkboxes
-                  in products.html. The value must be lowercase with no spaces
-                  (use hyphens if needed, e.g. "t-shirts").
-                -->
                 <select id="f-category">
                   <option value="">— Select category —</option>
                   <option value="shirts">Shirts</option>
                   <option value="pants">Pants</option>
                   <option value="outerwear">Outerwear</option>
                   <option value="accessories">Accessories</option>
-                  <!-- Add your own categories here -->
                 </select>
               </div>
 
-              <!-- Image URL -->
-              <div class="field-group">
-                <label for="f-image">Image URL or Path</label>
-                <input type="text" id="f-image" placeholder="e.g. images/shirt-01.jpg">
-                <span class="field-hint">Relative path to an image file in your project, or a full URL.</span>
-              </div>
-
-              <!-- Sizes (comma-separated) -->
+              <!-- Sizes -->
               <div class="field-group">
                 <label for="f-sizes">Available Sizes</label>
                 <input type="text" id="f-sizes" placeholder="e.g. S,M,L,XL">
-                <span class="field-hint">Comma-separated. Must match filter values in products.html (S, M, L, XL, XXL, etc.).</span>
+                <span class="field-hint">Comma-separated. Must match filter values in products.html.</span>
               </div>
 
-              <!-- Colors (comma-separated) -->
+              <!-- Colors -->
               <div class="field-group">
                 <label for="f-colors">Colors</label>
                 <input type="text" id="f-colors" placeholder="e.g. black,white,navy">
+                <span class="field-hint">Comma-separated. Available names: black, white, grey, navy, beige, red, green, blue, pink, yellow, brown, orange, purple.</span>
+              </div>
+
+              <!-- Tags -->
+              <div class="field-group">
+                <label for="f-tags">Tags / Sub-types</label>
+                <input type="text" id="f-tags" placeholder="e.g. long-sleeve,slim-fit">
+                <span class="field-hint">Comma-separated. Match the checkbox values in products.html Style filter.</span>
+              </div>
+
+              <!-- Images (multi-line, one per line) -->
+              <div class="field-group form-full">
+                <label for="f-images">Images (one path or URL per line)</label>
+                <textarea id="f-images" rows="4"
+                  placeholder="images/shirt-front.jpg&#10;images/shirt-back.jpg&#10;images/shirt-detail.jpg"></textarea>
                 <span class="field-hint">
-                  Comma-separated. Use these exact names to match the swatches:
-                  black, white, grey, navy, beige, red, green, blue, pink, yellow, brown, orange, purple.
+                  Enter one image path or URL per line. The first image is the primary.
+                  On the product page, the user scrolls through all images in order.
                 </span>
               </div>
 
-              <!-- Tags / Sub-types (comma-separated) -->
+              <!-- Short Description -->
               <div class="field-group form-full">
-                <label for="f-tags">Tags / Sub-types</label>
-                <input type="text" id="f-tags" placeholder="e.g. long-sleeve,slim-fit,button-down">
+                <label for="f-description">Short Description</label>
+                <textarea id="f-description" rows="3"
+                  placeholder="A clean, slim-fit long sleeve in premium cotton. Designed to layer or wear alone."></textarea>
+                <span class="field-hint">Shown below the price on the product detail page.</span>
+              </div>
+
+              <!-- Material & Care (accordion section 1) -->
+              <div class="field-group form-full">
+                <label for="f-material">Material &amp; Care</label>
+                <textarea id="f-material" rows="3"
+                  placeholder="95% cotton, 5% elastane. Machine wash cold, tumble dry low."></textarea>
+                <span class="field-hint">Shown in the "Material &amp; Care" accordion on the product page.</span>
+              </div>
+
+              <!-- Sizing Guide (accordion section 2) — accepts HTML for tables -->
+              <div class="field-group form-full">
+                <label for="f-size-guide">Sizing Guide</label>
+                <textarea id="f-size-guide" rows="6"
+                  placeholder="Plain text or HTML table. Example:&#10;&lt;table class=&quot;size-table&quot;&gt;&#10;  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Size&lt;/th&gt;&lt;th&gt;Chest&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&#10;  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;S&lt;/td&gt;&lt;td&gt;36–38&quot;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&#10;&lt;/table&gt;"></textarea>
                 <span class="field-hint">
-                  Comma-separated. These are the sub-type tags that appear in the Style filter
-                  in products.html (e.g. long-sleeve, short-sleeve, slim-fit, relaxed-fit).
-                  You can add any tag here — just also add a matching checkbox in products.html.
+                  Shown in the "Sizing Guide" accordion. Accepts plain text or HTML (including
+                  <code>&lt;table class="size-table"&gt;</code> for a styled measurements table).
+                </span>
+              </div>
+
+              <!-- Return Info (accordion section 3) -->
+              <div class="field-group form-full">
+                <label for="f-return-info">Returns &amp; Shipping Info</label>
+                <textarea id="f-return-info" rows="3"
+                  placeholder="Free returns within 30 days. Items must be unworn and in original packaging."></textarea>
+                <span class="field-hint">Shown in the "Returns &amp; Shipping" accordion on the product page.</span>
+              </div>
+
+              <!-- Related Product IDs (for Similar Products carousel) -->
+              <div class="field-group form-full">
+                <label for="f-related-ids">Related Product IDs (for "You Might Also Like")</label>
+                <input type="text" id="f-related-ids"
+                  placeholder="e.g. linen-button-down, relaxed-tee, slim-chino">
+                <span class="field-hint">
+                  Comma-separated product IDs. These appear in the Similar Products carousel
+                  at the bottom of this product's detail page. IDs for admin-saved products
+                  start with "p_" (visible in the table below). Hand-coded product IDs are
+                  the slugs in data-id on each card in products.html
+                  (e.g. "classic-long-sleeve").
                 </span>
               </div>
 
             </div><!-- /form-grid -->
 
             <div class="form-actions">
-              <!-- Cancel Edit button (hidden when adding) -->
               <button id="btn-cancel-edit"
                       class="btn-admin btn-admin-ghost"
                       style="display:none"
                       onclick="resetForm()">
                 Cancel
               </button>
-              <!-- Save Edit button (hidden when adding) -->
               <button id="btn-save-edit"
                       class="btn-admin btn-admin-success"
                       style="display:none"
                       onclick="saveEdit()">
                 ✓ Save Changes
               </button>
-              <!-- Add Product button (shown when adding) -->
               <button id="btn-add-product"
                       class="btn-admin btn-admin-primary"
                       onclick="addProduct()">
