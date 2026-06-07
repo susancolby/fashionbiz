@@ -192,9 +192,14 @@ p {
 
 /* Brand / logo text */
 .nav-brand {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  letter-spacing: 0.05em;
+  display: inline-block;
+  text-decoration: none; 
+}
+
+.nav-logo {
+  height: 1.5rem;
+  width: auto;
+  display: block;
 }
 
 /* Navigation links list */
