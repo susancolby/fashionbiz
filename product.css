@@ -1,0 +1,540 @@
+/* ============================================================
+   product.css — Styles for the individual product detail page (product.html)
+   Import AFTER style.css
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   PAGE-LEVEL LAYOUT
+   Two-column sticky layout: image column (left) + info column (right).
+   The image column scroll-locks until the last image is reached.
+   ------------------------------------------------------------ */
+
+/* Breadcrumb trail above the product */
+.product-breadcrumb {
+  padding: 1rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.product-breadcrumb a { text-decoration: underline; }
+.product-breadcrumb a:hover { color: var(--color-text); }
+.product-breadcrumb span { margin-inline: 0.4em; }
+
+/* Main two-column wrapper */
+.product-layout {
+  display: grid;
+  /* Left column: images (50% of page); Right: product info (50%) */
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+
+/* ------------------------------------------------------------
+   LEFT COLUMN — IMAGE VIEWER
+   The column is sticky so it stays in viewport while the right
+   side scrolls. JS handles transitioning images and releasing
+   the sticky lock once the last image is fully in view.
+   ------------------------------------------------------------ */
+.product-images {
+  position: sticky;
+  /* Sticks just below the nav bar */
+  top: var(--nav-height);
+  /* Full viewport height minus nav — so the column fills the screen */
+  height: calc(100vh - var(--nav-height));
+  overflow: hidden;      /* Hides images outside the viewport area */
+  background: var(--color-surface);
+}
+
+/* Inner scroll container — JS scrolls this programmatically */
+.image-scroll-inner {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;   /* Each image snaps into place */
+  scroll-behavior: smooth;
+  /* Hide the scrollbar visually — scrolling is driven by page scroll */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.image-scroll-inner::-webkit-scrollbar { display: none; }
+
+/* Each individual image slide */
+.product-image-slide {
+  width: 100%;
+  height: 100%;           /* Fills the sticky column exactly */
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.product-image-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* Fills the slide; change to 'contain' to show full image */
+  display: block;
+  background: var(--color-surface);
+}
+
+/* Dot navigation — shows which image is active */
+.image-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.image-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.image-dot.active {
+  background: var(--color-text);
+}
+
+/* Image counter (e.g. "2 / 5") in top-right of image column */
+.image-counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.8);
+  padding: 3px 8px;
+  border-radius: 100px;
+  z-index: 10;
+}
+
+
+/* ------------------------------------------------------------
+   RIGHT COLUMN — PRODUCT INFO
+   Standard scroll — user scrolls through this normally.
+   ------------------------------------------------------------ */
+.product-info {
+  padding: calc(var(--gap) * 2) calc(var(--gap) * 2) calc(var(--gap) * 4);
+  /* Enough bottom padding so the last section clears the viewport */
+}
+
+/* Product name */
+.product-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+/* Price */
+.product-price {
+  font-size: 1.2rem;
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+/* Short description text below price */
+.product-description {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+  max-width: 100%;
+  margin-bottom: 1.75rem;
+}
+
+/* Thin horizontal rule between info sections */
+.info-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-block: 1.5rem;
+}
+
+
+/* ---- Color/Pattern Swatches ---- */
+.swatch-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.6rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* The selected color name shown next to the label */
+.swatch-label strong {
+  color: var(--color-text);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.85rem;
+}
+
+.product-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+/* Each color/pattern swatch circle */
+.product-swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  cursor: pointer;
+  transition: outline-color var(--transition), border-color var(--transition);
+  position: relative;
+}
+
+/* Hover and selected state */
+.product-swatch:hover {
+  outline-color: var(--color-border);
+}
+
+.product-swatch.active {
+  outline-color: var(--color-accent);
+  border-color: white;   /* Creates a white gap ring between color and outline */
+}
+
+/* White swatch gets a border so it's visible on white backgrounds */
+.product-swatch[data-color="white"] {
+  border-color: var(--color-border);
+}
+
+
+/* ---- Size Selector ---- */
+.size-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* "Size guide" link next to the label */
+.size-guide-link {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.size-guide-link:hover { color: var(--color-text); }
+
+/* Size select dropdown */
+.size-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+  appearance: none;        /* Remove native dropdown arrow */
+  /* Custom arrow using background SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  cursor: pointer;
+  margin-bottom: 1.25rem;
+  transition: border-color var(--transition);
+}
+
+.size-select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+
+/* ---- Add to Cart Button ---- */
+.btn-add-cart {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition);
+  margin-bottom: 0.75rem;
+}
+
+.btn-add-cart:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+/* "Out of stock" state */
+.btn-add-cart:disabled {
+  background: var(--color-surface);
+  color: var(--color-muted);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+/* Wishlist / secondary action button */
+.btn-wishlist {
+  display: block;
+  width: 100%;
+  padding: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  margin-bottom: 1.5rem;
+}
+
+.btn-wishlist:hover {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+
+/* ---- Accordion / Dropdown Info Sections ---- */
+.accordion {
+  border-top: 1px solid var(--color-border);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Clickable header row */
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Animated chevron icon — rotates when open */
+.accordion-icon {
+  font-size: 0.75rem;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.accordion-item.open .accordion-icon {
+  transform: rotate(180deg);
+}
+
+/* Collapsible content area */
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.accordion-item.open .accordion-body {
+  /* JS sets an exact max-height via scrollHeight so the animation works */
+  max-height: 600px;
+}
+
+.accordion-body-inner {
+  padding-bottom: 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+/* Lists inside accordion (e.g. sizing guide) */
+.accordion-body-inner ul,
+.accordion-body-inner ol {
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.accordion-body-inner li {
+  margin-bottom: 0.3rem;
+}
+
+/* Simple two-column size table */
+.size-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 0.75rem;
+}
+
+.size-table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.size-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.size-table tr:last-child td { border-bottom: none; }
+
+
+/* ------------------------------------------------------------
+   SIMILAR PRODUCTS CAROUSEL
+   Full-width section below the two-column layout.
+   Scrolls horizontally on overflow; uses snap points.
+   ------------------------------------------------------------ */
+.similar-section {
+  padding: calc(var(--gap) * 3) 0 calc(var(--gap) * 4);
+  border-top: 1px solid var(--color-border);
+}
+
+.similar-section .section-title {
+  text-align: left;           /* Left-aligned for product pages */
+  margin-bottom: calc(var(--gap) * 1.2);
+}
+
+.similar-section .section-title h2 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+/* The scrollable carousel track */
+.similar-track-wrap {
+  position: relative;
+}
+
+.similar-track {
+  display: flex;
+  gap: var(--gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;       /* Room for scrollbar on some systems */
+  /* Hide scrollbar on all browsers */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.similar-track::-webkit-scrollbar { display: none; }
+
+/* Each card in the carousel — fixed width so multiple show at once */
+.similar-track .card {
+  flex: 0 0 calc(25% - var(--gap) * 0.75);  /* 4 cards wide on desktop */
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: box-shadow var(--transition);
+}
+
+.similar-track .card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Carousel prev/next arrow buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background var(--transition);
+}
+
+.carousel-btn:hover { background: var(--color-surface); }
+
+.carousel-btn-prev { left: -20px; }
+.carousel-btn-next { right: -20px; }
+
+/* Hide arrows when there's nothing to scroll */
+.carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 900px) {
+  /* Stack image and info vertically on tablet and mobile */
+  .product-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Un-sticky the image column — it scrolls inline instead */
+  .product-images {
+    position: relative;
+    top: auto;
+    height: 70vw;      /* Proportional height for inline display */
+    max-height: 520px;
+  }
+
+  .product-info {
+    padding: var(--gap);
+  }
+
+  /* 2 cards per row in the similar carousel on tablet */
+  .similar-track .card {
+    flex: 0 0 calc(50% - var(--gap) * 0.5);
+  }
+
+  /* Hide carousel arrows on mobile — user swipes */
+  .carousel-btn { display: none; }
+}
+
+@media (max-width: 480px) {
+  /* 1.2 cards visible on small phones (peeking at next) */
+  .similar-track .card {
+    flex: 0 0 calc(80% - var(--gap) * 0.5);
+  }
+}
