@@ -440,6 +440,12 @@ img { display: block; max-width: 100%; }
   transition: border-color var(--admin-transition);
 }
 
+.field-group textarea {
+  resize: vertical;          /* Allow vertical resize only */
+  line-height: 1.55;
+  font-family: var(--admin-font);
+}
+
 .field-group input:focus,
 .field-group select:focus,
 .field-group textarea:focus {
