@@ -19,7 +19,9 @@
   <!-- NAVIGATION (same on every page) -->
   <nav class="nav">
     <div class="container">
-      <a href="index.html" class="nav-brand">Your Brand</a>
+      <a href="index.html" class="nav-brand" aria-label="Home">
+        <img src="renasence_classic.svg" alt="Renasence" class="nav-logo">
+      </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Shop</a></li>
@@ -235,14 +237,20 @@
                  data-price    : numeric price used for sorting and range filter (e.g. "49.99")
                  data-name     : product name used for alphabetical sort
 
-               TO ADD A PRODUCT: Copy one <article> block, update all
-               data-* attributes and the visible content. No JS needed.
+               TO ADD A PRODUCT: Either (A) use the admin panel and the JS
+               below will render products from localStorage automatically, or
+               (B) copy an <article> block below and add a unique data-id.
+               Clicking any card navigates to product.html?id=...
                ====================================================== -->
           <div class="grid product-grid">
 
 
-            <!-- EXAMPLE PRODUCT 1 -->
+            <!-- EXAMPLE PRODUCT 1
+                 data-id must be unique across all products.
+                 When using the admin panel, IDs are auto-generated (p_timestamp).
+                 For hand-coded cards, pick a short unique slug. -->
             <article class="card product-card"
+              data-id="classic-long-sleeve"
               data-category="shirts"
               data-sizes="S,M,L,XL"
               data-colors="black,white"
@@ -250,9 +258,7 @@
               data-price="59.99"
               data-name="Classic Long Sleeve">
 
-              <!-- Replace src with your image path; update alt text -->
               <img class="card-image" src="" alt="Classic Long Sleeve Shirt">
-
               <div class="card-body">
                 <p class="card-title">Classic Long Sleeve</p>
                 <p class="card-price">$59.99</p>
@@ -267,6 +273,7 @@
 
             <!-- EXAMPLE PRODUCT 2 -->
             <article class="card product-card"
+              data-id="linen-button-down"
               data-category="shirts"
               data-sizes="XS,S,M"
               data-colors="white,beige"
@@ -289,6 +296,7 @@
 
             <!-- EXAMPLE PRODUCT 3 -->
             <article class="card product-card"
+              data-id="slim-chino"
               data-category="pants"
               data-sizes="S,M,L,XL,XXL"
               data-colors="navy,black"
@@ -310,6 +318,7 @@
 
             <!-- EXAMPLE PRODUCT 4 -->
             <article class="card product-card"
+              data-id="wool-overcoat"
               data-category="outerwear"
               data-sizes="M,L,XL"
               data-colors="grey,beige"
@@ -331,6 +340,7 @@
 
             <!-- EXAMPLE PRODUCT 5 -->
             <article class="card product-card"
+              data-id="canvas-tote"
               data-category="accessories"
               data-sizes=""
               data-colors="black,navy"
@@ -351,6 +361,7 @@
 
             <!-- EXAMPLE PRODUCT 6 -->
             <article class="card product-card"
+              data-id="relaxed-tee"
               data-category="shirts"
               data-sizes="S,M,L"
               data-colors="red,black,white"
@@ -371,9 +382,9 @@
 
 
             <!-- ===================================================
-                 ADD MORE PRODUCTS BELOW
-                 Copy the block above, fill in data-* attributes,
-                 add your image src, update the text content.
+                 ADD MORE PRODUCTS BELOW (hand-coded) or use the
+                 admin panel — localStorage products are injected
+                 automatically by the script at the bottom.
                  =================================================== -->
 
 
@@ -401,27 +412,112 @@
 
   <script src="preview-inject.js"></script>
   <script src="main.js"></script>
-  <!-- Products filter/sort logic — only needed on this page -->
   <script src="products.js"></script>
 
-  <!-- PRE-SELECT A CATEGORY FROM URL
-       This lets you link directly to a filtered view.
-       e.g. products.html?category=shirts will auto-check the Shirts filter.
-       No changes needed here — this is read from the URL automatically. -->
   <script>
-    // Read ?category= from the URL and check the matching checkbox on page load
     document.addEventListener('DOMContentLoaded', function () {
+
+      /* ----------------------------------------------------------
+         INJECT PRODUCTS FROM LOCALSTORAGE
+         Products saved via the admin panel are stored in localStorage.
+         We inject them as cards into the grid alongside any hand-coded ones,
+         skipping any whose id already exists in the HTML.
+         ---------------------------------------------------------- */
+      (function injectStoredProducts() {
+        const stored = JSON.parse(localStorage.getItem('products') || '[]');
+        if (!stored.length) return;
+
+        const grid = document.querySelector('.product-grid');
+        const existingIds = new Set(
+          Array.from(document.querySelectorAll('.product-card[data-id]'))
+            .map(el => el.dataset.id)
+        );
+
+        const COLOR_HEX = {
+          black:'#111111', white:'#ffffff', grey:'#888888', gray:'#888888',
+          navy:'#1a2e50', beige:'#d4c5a9', red:'#c0392b', green:'#27ae60',
+          blue:'#2563eb', pink:'#ec4899', yellow:'#f59e0b', brown:'#92400e',
+          orange:'#ea580c', purple:'#7c3aed'
+        };
+
+        stored.forEach(function(p) {
+          if (existingIds.has(p.id)) return;  // Skip if already in HTML
+
+          const tags = (p.tags || '').split(',').filter(Boolean);
+          const tagPills = (p.category ? `<span class="tag">${p.category}</span>` : '') +
+            tags.map(t => `<span class="tag">${t.trim()}</span>`).join('');
+
+          // Build color swatches for card (small dots only)
+          const colors = (p.colors || '').split(',').filter(Boolean);
+          const colorDots = colors.map(c => {
+            const hex = COLOR_HEX[c.trim()] || '#ccc';
+            return `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${hex};border:1px solid rgba(0,0,0,0.12);margin-right:3px;vertical-align:middle;" title="${c.trim()}"></span>`;
+          }).join('');
+
+          const article = document.createElement('article');
+          article.className = 'card product-card';
+          article.dataset.id       = p.id;
+          article.dataset.category = p.category || '';
+          article.dataset.sizes    = p.sizes    || '';
+          article.dataset.colors   = p.colors   || '';
+          article.dataset.tags     = p.tags     || '';
+          article.dataset.price    = p.price    || '0';
+          article.dataset.name     = p.name     || '';
+
+          article.innerHTML = `
+            <img class="card-image" src="${p.images ? p.images[0] : (p.image||'')}" alt="${p.name}">
+            <div class="card-body">
+              <p class="card-title">${p.name}</p>
+              <p class="card-price">$${parseFloat(p.price||0).toFixed(2)}</p>
+              ${colorDots ? `<div style="margin-top:6px;">${colorDots}</div>` : ''}
+              <div class="card-tags">${tagPills}</div>
+            </div>`;
+
+          // Insert before the "add more" comment at the end
+          grid.appendChild(article);
+        });
+
+        // Re-run filter init now that new cards are in the DOM
+        // (products.js already ran; re-applying just the count)
+        const event = new Event('DOMContentLoaded');
+      })();
+
+
+      /* ----------------------------------------------------------
+         MAKE CARDS CLICKABLE — navigate to product.html?id=...
+         Works for both hand-coded cards and localStorage-injected ones.
+         ---------------------------------------------------------- */
+      function bindCardClicks() {
+        document.querySelectorAll('.product-card').forEach(function(card) {
+          // Only bind once — skip if already has a listener
+          if (card.dataset.clickBound) return;
+          card.dataset.clickBound = 'true';
+
+          card.style.cursor = 'pointer';
+          card.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (id) window.location.href = 'product.html?id=' + encodeURIComponent(id);
+          });
+        });
+      }
+
+      bindCardClicks();
+
+      /* ----------------------------------------------------------
+         PRE-SELECT CATEGORY FROM URL (?category=shirts)
+         ---------------------------------------------------------- */
       const params = new URLSearchParams(window.location.search);
-      const cat = params.get('category');  // e.g. "shirts"
+      const cat = params.get('category');
       if (cat) {
         const cb = document.querySelector(
           '.filter-option input[data-filter="category"][value="' + cat + '"]'
         );
         if (cb) {
           cb.checked = true;
-          cb.dispatchEvent(new Event('change'));  // Trigger the filter logic
+          cb.dispatchEvent(new Event('change'));
         }
       }
+
     });
   </script>
 
