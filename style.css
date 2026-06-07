@@ -190,16 +190,25 @@ p {
   justify-content: space-between;
 }
 
-/* Brand / logo text */
+/* Brand / logo link — wraps the SVG image */
 .nav-brand {
-  display: inline-block;
-  text-decoration: none; 
+  display: flex;
+  align-items: center;
+  line-height: 0;        /* Removes extra inline spacing around the img */
 }
 
+/* SVG logo — sized to fit the nav bar with breathing room.
+   To resize the logo, change the height value here only.
+   Width stays auto so the aspect ratio is always preserved. */
 .nav-logo {
-  height: 1.5rem;
+  height: 36px;          /* ← adjust this to resize the logo */
   width: auto;
   display: block;
+}
+
+/* Slight reduction on very small screens */
+@media (max-width: 380px) {
+  .nav-logo { height: 28px; }
 }
 
 /* Navigation links list */
