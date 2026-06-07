@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title is set dynamically by product.js -->
+  <title>Product — Renasence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="product.css">
+</head>
+<body>
+
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-brand" aria-label="Home">
+        <img src="renasence_classic.svg" alt="Renasence" class="nav-logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <main>
+    <div class="container">
+
+      <!-- ============================================================
+           BREADCRUMB
+           Populated by product.js with the actual product name and category.
+           ============================================================ -->
+      <nav class="product-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span aria-hidden="true">›</span>
+        <!-- Category link — href and text set by product.js -->
+        <a href="products.html" id="breadcrumb-category">Shop</a>
+        <span aria-hidden="true">›</span>
+        <!-- Product name — set by product.js -->
+        <span id="breadcrumb-product">Loading…</span>
+      </nav>
+
+    </div><!-- /breadcrumb container -->
+
+
+    <!-- ============================================================
+         PRODUCT LAYOUT — two-column: images left, info right
+         Everything inside is populated by product.js
+         ============================================================ -->
+    <div class="product-layout">
+
+
+      <!-- =========================================================
+           LEFT COLUMN: IMAGE VIEWER
+           product.js builds .product-image-slide elements inside
+           #image-scroll-inner based on the product's images array.
+           ========================================================= -->
+      <div class="product-images" id="product-images">
+
+        <!-- Image counter (e.g. "1 / 3") — updated by JS -->
+        <div class="image-counter" id="image-counter">1 / 1</div>
+
+        <!-- Scrollable image container — JS scrolls this for scroll-lock effect -->
+        <div class="image-scroll-inner" id="image-scroll-inner">
+          <!-- Slides injected here by product.js renderImages() -->
+        </div>
+
+        <!-- Dot navigation — injected by product.js -->
+        <div class="image-dots" id="image-dots"></div>
+
+      </div><!-- /product-images -->
+
+
+      <!-- =========================================================
+           RIGHT COLUMN: PRODUCT INFO
+           All text content is injected by product.js.
+           The structure/skeleton stays in HTML; only the text changes.
+           ========================================================= -->
+      <div class="product-info">
+
+        <!-- Product name — set by product.js -->
+        <h1 class="product-title" id="product-title">Loading…</h1>
+
+        <!-- Price — set by product.js -->
+        <p class="product-price" id="product-price"></p>
+
+        <!-- Short description — set by product.js -->
+        <p class="product-description" id="product-description"></p>
+
+        <hr class="info-divider">
+
+
+        <!-- -------------------------------------------------------
+             COLOR / PATTERN SWATCHES
+             Hidden by product.js if the product has no colors.
+             ------------------------------------------------------- -->
+        <div id="swatch-section">
+          <p class="swatch-label">
+            Color:&nbsp;<strong id="swatch-selected-name"></strong>
+          </p>
+          <!-- Swatch buttons injected by product.js renderSwatches() -->
+          <div class="product-swatches" id="swatch-container"></div>
+        </div>
+
+
+        <!-- -------------------------------------------------------
+             SIZE SELECTOR
+             Hidden by product.js if the product has no sizes.
+             ------------------------------------------------------- -->
+        <div id="size-section">
+          <p class="size-label">
+            Size
+            <!-- "Size guide" opens the sizing accordion below -->
+            <button class="size-guide-link"
+                    onclick="document.getElementById('accordion-sizing').querySelector('.accordion-trigger').click()">
+              Size Guide
+            </button>
+          </p>
+
+          <!-- Options injected by product.js renderSizes() -->
+          <select class="size-select" id="size-select" aria-label="Select size">
+            <option value="">Select a size</option>
+          </select>
+        </div>
+
+
+        <!-- -------------------------------------------------------
+             ADD TO CART & WISHLIST
+             addToCart() is defined in product.js — replace its body
+             with your actual cart/checkout integration.
+             ------------------------------------------------------- -->
+        <button class="btn-add-cart" onclick="addToCart()">
+          Add to Cart
+        </button>
+
+        <button class="btn-wishlist">
+          ♡&ensp;Save to Wishlist
+        </button>
+
+
+        <!-- -------------------------------------------------------
+             ACCORDION SECTIONS
+             Each .accordion-item expands/collapses on trigger click.
+             Content is injected by product.js setAccordionContent().
+
+             TO ADD A NEW SECTION:
+             Copy one .accordion-item block and give it a new id.
+             Then call setAccordionContent('new-id', content) in
+             the renderProduct() function in product.js.
+             ------------------------------------------------------- -->
+        <div class="accordion">
+
+          <!-- Material & Care -->
+          <div class="accordion-item" id="accordion-material">
+            <button class="accordion-trigger" aria-expanded="false">
+              Material &amp; Care
+              <span class="accordion-icon" aria-hidden="true">&#9660;</span>
+            </button>
+            <div class="accordion-body" role="region">
+              <div class="accordion-body-inner">
+                <!-- Injected by product.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Sizing Guide -->
+          <div class="accordion-item" id="accordion-sizing">
+            <button class="accordion-trigger" aria-expanded="false">
+              Sizing Guide
+              <span class="accordion-icon" aria-hidden="true">&#9660;</span>
+            </button>
+            <div class="accordion-body" role="region">
+              <div class="accordion-body-inner">
+                <!-- Injected by product.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Returns & Shipping -->
+          <div class="accordion-item" id="accordion-returns">
+            <button class="accordion-trigger" aria-expanded="false">
+              Returns &amp; Shipping
+              <span class="accordion-icon" aria-hidden="true">&#9660;</span>
+            </button>
+            <div class="accordion-body" role="region">
+              <div class="accordion-body-inner">
+                <!-- Injected by product.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ADD MORE ACCORDION SECTIONS HERE:
+               <div class="accordion-item" id="accordion-custom">
+                 <button class="accordion-trigger" aria-expanded="false">
+                   Custom Section Title
+                   <span class="accordion-icon" aria-hidden="true">&#9660;</span>
+                 </button>
+                 <div class="accordion-body" role="region">
+                   <div class="accordion-body-inner">
+                     Static content can go directly here, or inject via product.js.
+                   </div>
+                 </div>
+               </div>
+          -->
+
+        </div><!-- /accordion -->
+
+      </div><!-- /product-info -->
+    </div><!-- /product-layout -->
+
+
+    <!-- ============================================================
+         SIMILAR PRODUCTS CAROUSEL
+         Full-width section below the two-column layout.
+         Product cards injected by product.js renderSimilar().
+         ============================================================ -->
+    <div class="container">
+      <section class="similar-section" id="similar-section">
+
+        <div class="section-title">
+          <h2>You Might Also Like</h2>
+        </div>
+
+        <div class="similar-track-wrap">
+
+          <!-- Left arrow button -->
+          <button class="carousel-btn carousel-btn-prev" id="carousel-prev"
+                  aria-label="Scroll left">&#8592;</button>
+
+          <!-- Scrollable product track — cards injected by product.js -->
+          <div class="similar-track" id="similar-track">
+            <!-- Cards inserted here by renderSimilar() -->
+          </div>
+
+          <!-- Right arrow button -->
+          <button class="carousel-btn carousel-btn-next" id="carousel-next"
+                  aria-label="Scroll right">&#8594;</button>
+
+        </div>
+      </section>
+    </div><!-- /similar container -->
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <a href="about.html">About</a>
+      </nav>
+      <p>&copy; 2025 Renasence. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script src="preview-inject.js"></script>
+  <script src="main.js"></script>
+  <script src="product.js"></script>
+
+</body>
+</html>
