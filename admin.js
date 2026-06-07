@@ -104,14 +104,19 @@ function showPanel(panelId, clickedEl) {
    Products are stored in localStorage as a JSON array.
    Each product object has these fields:
    {
-     id:       string (timestamp-based unique ID),
-     name:     string,
-     price:    string (e.g. "49.99"),
-     category: string (e.g. "shirts"),
-     sizes:    string (comma-separated, e.g. "S,M,L"),
-     colors:   string (comma-separated, e.g. "black,white"),
-     tags:     string (comma-separated, e.g. "long-sleeve,slim-fit"),
-     image:    string (URL or relative path),
+     id:          string  — timestamp-based unique ID (auto-generated),
+     name:        string,
+     price:       string  — e.g. "49.99",
+     category:    string  — e.g. "shirts",
+     sizes:       string  — comma-separated, e.g. "S,M,L",
+     colors:      string  — comma-separated, e.g. "black,white",
+     tags:        string  — comma-separated, e.g. "long-sleeve,slim-fit",
+     images:      array   — list of image paths/URLs (supports multiple),
+     description: string  — short product blurb shown on detail page,
+     material:    string  — fabric/care info (accordion section 1),
+     sizeGuide:   string  — HTML or text for sizing table (accordion section 2),
+     returnInfo:  string  — return policy text (accordion section 3),
+     relatedIds:  string  — comma-separated product IDs for "Similar" carousel,
    }
    ------------------------------------------------------------ */
 
@@ -159,11 +164,13 @@ function renderProductTable() {
   // Build one <tr> per product
   tbody.innerHTML = products.map(function (p) {
 
+    // Primary image: first in images array, or legacy image field
+    const primaryImg = Array.isArray(p.images) ? (p.images[0] || '') : (p.image || '');
+
     // Render color dots from comma-separated color string
     const colorDots = (p.colors || '').split(',')
       .filter(Boolean)
       .map(function (c) {
-        // Look up the hex from the COLOR_MAP defined below
         const hex = COLOR_MAP[c.trim()] || '#cccccc';
         return `<span class="color-dot" style="background:${hex}" title="${c.trim()}"></span>`;
       }).join('');
@@ -175,23 +182,28 @@ function renderProductTable() {
         return `<span class="table-tag">${t.trim()}</span>`;
       }).join('');
 
-    // Escape the product object as JSON for the edit button's onclick
-    // We pass the id and re-look it up in editProduct() to avoid injection issues
     return `
       <tr>
         <td>
           <img class="product-thumb"
-               src="${p.image || ''}"
+               src="${primaryImg}"
                alt="${p.name}"
                onerror="this.style.background='var(--admin-bg)'">
         </td>
-        <td><strong>${p.name}</strong></td>
+        <td>
+          <strong>${p.name}</strong>
+          <br><span style="font-size:0.75rem;color:var(--admin-muted)">ID: ${p.id}</span>
+        </td>
         <td>$${parseFloat(p.price || 0).toFixed(2)}</td>
         <td>${p.category || '—'}</td>
         <td>${colorDots || '—'}</td>
         <td>${tagPills || '—'}</td>
         <td>
           <div class="row-actions">
+            <a class="btn-admin btn-admin-ghost"
+               href="product.html?id=${encodeURIComponent(p.id)}"
+               target="_blank"
+               style="font-size:0.78rem; text-decoration:none;">↗ View</a>
             <button class="btn-admin btn-admin-ghost"
                     onclick="editProduct('${p.id}')">Edit</button>
             <button class="btn-admin btn-admin-danger"
@@ -246,27 +258,36 @@ function editProduct(id) {
   const p = products.find(function (x) { return x.id === id; });
   if (!p) return;
 
-  // Fill form fields with the product's current values
-  document.getElementById('f-name').value     = p.name     || '';
-  document.getElementById('f-price').value    = p.price    || '';
-  document.getElementById('f-category').value = p.category || '';
-  document.getElementById('f-sizes').value    = p.sizes    || '';
-  document.getElementById('f-colors').value   = p.colors   || '';
-  document.getElementById('f-tags').value     = p.tags     || '';
-  document.getElementById('f-image').value    = p.image    || '';
+  // Fill all form fields with the product's current values
+  document.getElementById('f-name').value        = p.name        || '';
+  document.getElementById('f-price').value       = p.price       || '';
+  document.getElementById('f-category').value    = p.category    || '';
+  document.getElementById('f-sizes').value       = p.sizes       || '';
+  document.getElementById('f-colors').value      = p.colors      || '';
+  document.getElementById('f-tags').value        = p.tags        || '';
+  document.getElementById('f-description').value = p.description || '';
+  document.getElementById('f-material').value    = p.material    || '';
+  document.getElementById('f-size-guide').value  = p.sizeGuide   || '';
+  document.getElementById('f-return-info').value = p.returnInfo  || '';
+  document.getElementById('f-related-ids').value = Array.isArray(p.relatedIds)
+    ? p.relatedIds.join(', ')
+    : (p.relatedIds || '');
 
-  // Store the id being edited in a hidden field so saveEdit() knows which to update
+  // Images: stored as array, joined by newlines in the textarea
+  const imgs = Array.isArray(p.images)
+    ? p.images.join('\n')
+    : (p.image || '');   // Legacy single-image fallback
+  document.getElementById('f-images').value = imgs;
+
+  // Store the editing id in the hidden field
   document.getElementById('f-edit-id').value = id;
 
-  // Swap buttons: hide "Add", show "Save Edit" + "Cancel"
+  // Swap buttons
   document.getElementById('btn-add-product').style.display   = 'none';
   document.getElementById('btn-save-edit').style.display     = 'inline-flex';
   document.getElementById('btn-cancel-edit').style.display   = 'inline-flex';
+  document.getElementById('form-card-title').textContent     = 'Edit Product';
 
-  // Update the form title
-  document.getElementById('form-card-title').textContent = 'Edit Product';
-
-  // Scroll to the form
   document.getElementById('product-form-card').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -313,13 +334,21 @@ function deleteProduct(id) {
 /* ---- Read values from the product form ----
    Returns a product object, or null if validation fails. */
 function readForm() {
-  const name     = document.getElementById('f-name').value.trim();
-  const price    = document.getElementById('f-price').value.trim();
-  const category = document.getElementById('f-category').value.trim();
-  const sizes    = document.getElementById('f-sizes').value.trim();
-  const colors   = document.getElementById('f-colors').value.trim();
-  const tags     = document.getElementById('f-tags').value.trim();
-  const image    = document.getElementById('f-image').value.trim();
+  const name        = document.getElementById('f-name').value.trim();
+  const price       = document.getElementById('f-price').value.trim();
+  const category    = document.getElementById('f-category').value.trim();
+  const sizes       = document.getElementById('f-sizes').value.trim();
+  const colors      = document.getElementById('f-colors').value.trim();
+  const tags        = document.getElementById('f-tags').value.trim();
+  const description = document.getElementById('f-description').value.trim();
+  const material    = document.getElementById('f-material').value.trim();
+  const sizeGuide   = document.getElementById('f-size-guide').value.trim();
+  const returnInfo  = document.getElementById('f-return-info').value.trim();
+  const relatedIds  = document.getElementById('f-related-ids').value.trim();
+
+  // Images: split the textarea by newline, filter empty lines
+  const imagesRaw = document.getElementById('f-images').value;
+  const images    = imagesRaw.split('\n').map(s => s.trim()).filter(Boolean);
 
   // Basic validation
   if (!name) {
@@ -333,20 +362,25 @@ function readForm() {
     return null;
   }
 
-  return { name, price, category, sizes, colors, tags, image };
+  return { name, price, category, sizes, colors, tags, images, description, material, sizeGuide, returnInfo, relatedIds };
 }
 
 
 /* ---- Reset the form to its blank add-new state ---- */
 function resetForm() {
-  document.getElementById('f-name').value     = '';
-  document.getElementById('f-price').value    = '';
-  document.getElementById('f-category').value = '';
-  document.getElementById('f-sizes').value    = '';
-  document.getElementById('f-colors').value   = '';
-  document.getElementById('f-tags').value     = '';
-  document.getElementById('f-image').value    = '';
-  document.getElementById('f-edit-id').value  = '';
+  document.getElementById('f-name').value        = '';
+  document.getElementById('f-price').value       = '';
+  document.getElementById('f-category').value    = '';
+  document.getElementById('f-sizes').value       = '';
+  document.getElementById('f-colors').value      = '';
+  document.getElementById('f-tags').value        = '';
+  document.getElementById('f-images').value      = '';
+  document.getElementById('f-description').value = '';
+  document.getElementById('f-material').value    = '';
+  document.getElementById('f-size-guide').value  = '';
+  document.getElementById('f-return-info').value = '';
+  document.getElementById('f-related-ids').value = '';
+  document.getElementById('f-edit-id').value     = '';
 
   document.getElementById('btn-add-product').style.display  = 'inline-flex';
   document.getElementById('btn-save-edit').style.display    = 'none';
@@ -358,13 +392,10 @@ function resetForm() {
 /* ------------------------------------------------------------
    SECTION 4: GENERATE products.html OUTPUT
 
-   This generates the <article> blocks you paste into products.html.
-   Because this is a static site (no server), the admin can't
-   write to files directly. Instead it builds the HTML string
-   so you can copy-paste it into the product grid in products.html.
-
-   When you eventually move to a server/backend, this would be
-   replaced by an API write.
+   Generates <article> card HTML to paste into products.html.
+   Admin-saved products are also auto-rendered on products.html
+   via the inline script in that file, but this export lets you
+   bake them into the static HTML for no-JS environments.
    ------------------------------------------------------------ */
 function generateProductsHTML() {
   const products = loadProducts();
@@ -377,14 +408,18 @@ function generateProductsHTML() {
   }
 
   const html = products.map(function (p) {
+    // Primary image: first in images array, or legacy image field
+    const primaryImg = Array.isArray(p.images) ? (p.images[0] || '') : (p.image || '');
+
     return `<article class="card product-card"
+  data-id="${p.id || ''}"
   data-category="${p.category || ''}"
   data-sizes="${p.sizes || ''}"
   data-colors="${p.colors || ''}"
   data-tags="${p.tags || ''}"
   data-price="${p.price || '0'}"
   data-name="${p.name || ''}">
-  <img class="card-image" src="${p.image || ''}" alt="${p.name || ''}">
+  <img class="card-image" src="${primaryImg}" alt="${p.name || ''}">
   <div class="card-body">
     <p class="card-title">${p.name || ''}</p>
     <p class="card-price">$${parseFloat(p.price || 0).toFixed(2)}</p>
