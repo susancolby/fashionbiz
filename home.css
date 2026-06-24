@@ -21,7 +21,7 @@
      background-size: cover;
      background-position: center;
   */
-  background-image: url('hero.jpeg');
+  background-image: src="hero.jpeg";
   background-size: cover;
   background-position: center;
   /* background-color: var(--color-surface);   Placeholder — remove when using an image */
