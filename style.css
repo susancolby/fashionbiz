@@ -201,7 +201,7 @@ p {
    To resize the logo, change the height value here only.
    Width stays auto so the aspect ratio is always preserved. */
 .nav-logo {
-  height: 28px;          /* ← adjust this to resize the logo */
+  height: 32px;          /* ← adjust this to resize the logo */
   width: auto;
   display: block;
 }
