@@ -21,7 +21,10 @@
      background-size: cover;
      background-position: center;
   */
-  background-color: var(--color-surface);  /* Placeholder — remove when using an image */
+  background-image: url('hero.jpg');
+  background-size: cover;
+  background-position: center;
+  /* background-color: var(--color-surface);   Placeholder — remove when using an image */
 }
 
 .hero-content {
