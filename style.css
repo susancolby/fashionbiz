@@ -20,8 +20,8 @@
   --color-surface:    #f5f5f5;   /* Cards, input backgrounds */
 
   /* --- Typography --- */
-  --font-heading: 'Cormorant Garamond', Georgia, serif; /* Display / headings */
-  --font-body:    'Jost', Helvetica, Arial, sans-serif; /* Body copy */
+  --font-heading: Arial, sans-serif; /* Display / headings */
+  --font-body:    Arial, sans-serif; /* Body copy */
 
   /* --- Sizing & Spacing --- */
   --max-width:    1200px;   /* Maximum content width */
