@@ -84,7 +84,7 @@ button {
    ------------------------------------------------------------ */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  font-weight: 400;          /* Cormorant looks best at regular weight */
+  font-weight: bold;          /* Cormorant looks best at regular weight */
   line-height: 1.2;
 }
 
