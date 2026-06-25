@@ -42,6 +42,14 @@
   font-size: 1.05rem;
 }
 
+.hero-lightfont {
+   font-color: white;
+}
+
+.hero-sublightfont {
+   font-color: #e0e0e0;
+}
+
 /* Stacked button pair */
 .hero-actions {
   display: flex;
