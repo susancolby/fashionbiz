@@ -182,6 +182,7 @@ p {
 
 .btn-lightoutline {
   background-color: transparent;
+  border-color: white;
   color: white;
 }
 
