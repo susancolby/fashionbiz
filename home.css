@@ -34,12 +34,14 @@
 
 .hero-content h1 {
   margin-bottom: 1rem;
+  font-color: white;
 }
 
 .hero-content p {
   margin-inline: auto;   /* Centers the constrained paragraph */
   margin-bottom: 2rem;
   font-size: 1.05rem;
+  font-color: #e0e0e0;
 }
 
 .hero-lightfont {
