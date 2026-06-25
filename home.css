@@ -1,3 +1,4 @@
+
 /* ============================================================
    home.css — Styles specific to index.html (Home page)
    Import AFTER style.css
@@ -123,8 +124,9 @@
   padding-block: 0.9rem;
   white-space: nowrap;      /* Keeps text on one line for marquee effect */
   font-family: var(--font-heading);
-  font-size: 1.1rem;
-  letter-spacing: 0.12em;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
   color: var(--color-muted);
 }
 
