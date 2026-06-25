@@ -74,10 +74,20 @@
   color: #ffffff;
 }
 
-/* Placeholder background — swap for real images */
+.category-tile img {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover; /* Prevents image stretching */
+   z-index: 0;        /* Image sits behind text/gradient */
+}
+
+/* Placeholder background — swap for real images
 .category-tile {
   background-color: var(--color-surface);
 }
+*/
 
 /* Dark gradient overlay so text is readable over images */
 .category-tile::after {
@@ -86,11 +96,12 @@
   inset: 0;                        /* Shorthand for top/right/bottom/left: 0 */
   background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%);
   pointer-events: none;            /* Clicks pass through the overlay */
+  z-index: 1;                      /* Sits on top of image */
 }
 
 .category-tile-label {
   position: relative;
-  z-index: 1;                      /* Above the ::after overlay */
+  z-index: 2;                      /* Above the ::after overlay */
   padding: var(--gap);
   font-size: 0.9rem;
   letter-spacing: 0.06em;
