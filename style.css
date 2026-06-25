@@ -179,6 +179,17 @@ p {
    background-color: #e0e0e0;
    border-color: #e0e0e0;
 }
+
+.btn-lightoutline {
+  background-color: transparent;
+  color: white;
+}
+
+.btn-lightoutline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
 /* ------------------------------------------------------------
    NAVIGATION
    Sticky top bar present on all pages.
