@@ -28,7 +28,7 @@
   --nav-height:   64px;     /* Height of the top navigation bar */
   --gap:          24px;     /* Standard spacing unit */
   --radius:       4px;      /* Border radius for cards */
-  --btn-radius:   20px;     /* Border radius for buttons */
+  --btn-radius:   100px;     /* Border radius for buttons */
 
   /* --- Transitions --- */
   --transition: 0.2s ease;
