@@ -169,7 +169,16 @@ p {
   color: var(--color-bg);
 }
 
+.btn-light {
+   background-color: white;
+   border-color: white;
+   color:black;
+}
 
+.btn-light:hover {
+   background-color: #e0e0e0;
+   border-color: #e0e0e0;
+}
 /* ------------------------------------------------------------
    NAVIGATION
    Sticky top bar present on all pages.
