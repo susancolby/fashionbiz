@@ -239,7 +239,8 @@ p {
   gap: calc(var(--gap) * 1.5);
   font-size: 0.85rem;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
+  text-transform: lowercase;
+  text-weight: bold;
 }
 
 .nav-links a {
