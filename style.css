@@ -240,7 +240,7 @@ p {
   font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: lowercase;
-  text-weight: bold;
+  font-weight: bold;
 }
 
 .nav-links a {
