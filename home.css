@@ -92,6 +92,7 @@
   z-index: 2;
   padding: var(--gap, 1rem); /* Added a fallback */
   font-size: 0.9rem;
+  font-weight: bold;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   
