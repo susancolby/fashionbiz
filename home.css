@@ -94,7 +94,7 @@
   font-size: 0.9rem;
   font-weight: bold;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
+  text-transform: lowercase;
   
   /* Forces the span to behave like a full-width block inside the flexbox */
   display: block;
