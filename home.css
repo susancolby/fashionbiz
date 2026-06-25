@@ -22,7 +22,7 @@
      background-size: cover;
      background-position: center;
   */
-  background-image: url("hero.jpeg");
+  background-image: url("hero.jpg");
   background-size: cover;
   background-position: center;
   /* background-color: var(--color-surface);   Placeholder — remove when using an image */
@@ -66,7 +66,7 @@
 .category-tile {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: var(--radius, 8px); /* Added a fallback */
+  border-radius: 0; /* Added a fallback */
   overflow: hidden;
   display: flex;
   align-items: flex-end;
