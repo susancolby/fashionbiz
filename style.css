@@ -359,6 +359,12 @@ p {
   gap: var(--gap);
 }
 
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding-block: calc(var(--gap) * 3);
+  color: var(--color-muted);
+}
 
 /* ------------------------------------------------------------
    FORMS — filters, inputs, selects
