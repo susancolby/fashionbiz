@@ -56,11 +56,25 @@
    FEATURED CATEGORIES SECTION
    A small grid of category tiles linking to filtered products.
    ------------------------------------------------------------ */
+/* 1. Base Grid Setup (No gaps, full width) */
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--gap);
+  gap: 0; /* Changed from var(--gap) to 0 to completely remove gaps */
   width: 100%;
+}
+
+/* 2. Vertical Viewing (Portrait - Mobile/Tablets held vertically) */
+@media (orientation: portrait) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr); /* Exactly 2 per row */
+  }
+}
+
+/* 3. Horizontal Viewing (Landscape - Desktops/Tablets held horizontally) */
+@media (orientation: landscape) {
+  .categories-grid {
+    grid-template-columns: repeat(4, 1fr); /* Exactly 4 per row */
+  }
 }
 
 .category-tile {
