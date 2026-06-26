@@ -529,7 +529,6 @@ function renderSimilar(relatedIds, currentId, allProducts) {
     if (track) track.innerHTML = '<p style="color:var(--color-muted); font-size:0.9rem; padding: 20px 0;">Check back later — more products are on the way.</p>';
     return;
   }
-}
 
   track.innerHTML = related.map(function (p) {
     const img = Array.isArray(p.images) ? (p.images[0] || '') : (p.image || '');
