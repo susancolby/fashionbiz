@@ -210,6 +210,43 @@
     </div>
   </footer>
 
+  <!-- ============================================================
+       CART DRAWER
+       Shared across all pages. Populated by Cart in main.js.
+       ============================================================ -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart" aria-modal="true">
+
+    <div class="cart-header">
+      <div>
+        <h2>Your Cart <span class="cart-item-count" id="cart-item-count"></span></h2>
+      </div>
+      <button class="cart-close" onclick="Cart.close()" aria-label="Close cart">✕</button>
+    </div>
+
+    <!-- Cart item list — populated by Cart.renderCartItems() in main.js -->
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">
+        <p>Your cart is empty.</p>
+        <p>Add a product from the shop to get started.</p>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span class="cart-subtotal-label">Subtotal</span>
+        <span class="cart-subtotal-amount" id="cart-subtotal-amount">$0.00</span>
+      </div>
+      <p class="cart-subtotal-note">Shipping and taxes calculated at checkout.</p>
+
+      <!-- Replace onclick with your checkout integration when ready -->
+      <button class="cart-checkout-btn" onclick="alert('Connect your checkout here — Shopify, Stripe, Gumroad, etc.')">
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </div>
 
   <script src="preview-inject.js"></script>
   <script src="main.js"></script>
