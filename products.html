@@ -477,6 +477,16 @@
           grid.appendChild(article);
         });
 
+        const totalCards = document.querySelectorAll('.product-card').length;
+        if (totalCards === 0) {
+          const grid = document.querySelector('.product-grid');
+          const msg = document.createElement('p');
+          msg.className = 'no-results';
+          msg.style.gridColumn = '1 / -1';
+          msg.textContent = 'Check back later — new products are on the way.';
+          grid.appendChild(msg);
+        }
+        
         // Re-run filter init now that new cards are in the DOM
         // (products.js already ran; re-applying just the count)
         const event = new Event('DOMContentLoaded');
