@@ -47,7 +47,11 @@
         <li><a href="about.html">About</a></li>
         <!-- Add more pages here as needed -->
       </ul>
-
+<!-- Cart button — opens the cart drawer -->
+      <button class="cart-nav-btn" onclick="Cart.open()" aria-label="Open cart">
+        Cart
+        <span class="cart-badge" id="cart-badge" aria-live="polite"></span>
+      </button>
       <!-- Hamburger button — visible only on mobile -->
       <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
         <span></span>
