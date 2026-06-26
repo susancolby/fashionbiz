@@ -154,6 +154,17 @@ document.addEventListener('DOMContentLoaded', function () {
      whether to show or hide it based on activeFilters.
      ---------------------------------------------------------- */
   function applyFilters() {
+    const allCards = document.querySelectorAll('.product-card');
+    if (allCards.length === 0) {
+       const grid = document.querySelector('.product-grid');
+       if (grid && !grid.querySelector('.no-results')) {
+         const msg = document.createElement('p');
+         msg.className = 'no-results';
+         msg.textContent = 'Check back later — new products are on the way.';
+         grid.appendChild(msg);
+    }
+    return;
+   
     let visibleCount = 0;
 
     productCards.forEach(function (card) {
