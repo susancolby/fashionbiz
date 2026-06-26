@@ -162,9 +162,10 @@ document.addEventListener('DOMContentLoaded', function () {
          msg.className = 'no-results';
          msg.textContent = 'Check back later — new products are on the way.';
          grid.appendChild(msg);
-    }
+       }
     return;
-   
+    }
+       
     let visibleCount = 0;
 
     productCards.forEach(function (card) {
