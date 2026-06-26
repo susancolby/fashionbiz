@@ -193,6 +193,7 @@ const COLOR_HEX = {
   purple: '#7c3aed',
 };
 
+let productId = '';
 
 /* ============================================================
    BOOTSTRAP — runs when DOM is ready
@@ -204,8 +205,8 @@ document.addEventListener('DOMContentLoaded', function () {
      Read ?id= from the URL, look up in localStorage first,
      then fall back to STATIC_PRODUCTS.
      ---------------------------------------------------------- */
-  const params     = new URLSearchParams(window.location.search);
-  const productId  = params.get('id');
+  const params = new URLSearchParams(window.location.search);
+  productId    = params.get('id'); 
 
   if (!productId) {
     showError('No product specified.');
