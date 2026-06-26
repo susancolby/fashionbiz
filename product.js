@@ -634,8 +634,27 @@ function addToCart() {
        - size:      selected size string (e.g. "M")
        - color:     selected color string (e.g. "black")
   ─────────────────────────────────────────────────────────── */
-  const productId = new URLSearchParams(window.location.search).get('id');
-  alert(`Added to cart:\nProduct: ${productId}\nSize: ${size || 'N/A'}\nColor: ${color || 'N/A'}\n\nReplace this alert with your cart integration.`);
+  // ── CART INTEGRATION ──────────────────────────────────────
+  // Resolve the product to get its name and image for the cart item
+  const stored = getStoredProducts();
+  let product  = stored.find(p => p.id === productId);
+  if (!product) product = STATIC_PRODUCTS.find(p => p.id === productId);
+
+  const image = product && Array.isArray(product.images)
+    ? (product.images[0] || '')
+    : (product && product.image ? product.image : '');
+
+  const priceValue = product ? product.price : '0';
+
+  window.Cart.add({
+    id:    productId,
+    name:  product ? product.name : productId,
+    price: priceValue,
+    size:  size   || '',
+    color: color  || '',
+    image: image,
+  });
+  // ────────────────────────────────────────────────────────────
 }
 
 
