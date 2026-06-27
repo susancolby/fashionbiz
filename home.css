@@ -51,8 +51,7 @@
   flex-direction: column;
   
   /* Font Styling to match the vibe */
-  font-family: "Red Hat Display", sans-serif;
-  font-weight: 600;
+  font-family: 'Red Hat Display', sans-serif; /* Use your preferred italic/sans font */
   font-style: italic;
   font-size: clamp(2rem, 5vw, 4.5rem); /* Scales beautifully across devices */
   color: #ffffff;
@@ -72,7 +71,6 @@
 .line-3 {
   padding-left: 3em; /* Shifts the third word even further right */
 }
-
 /* Stacked button pair */
 .hero-actions {
   position: absolute;
