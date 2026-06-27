@@ -75,12 +75,39 @@
 
 /* Stacked button pair */
 .hero-actions {
-  display: flex;
-  gap: var(--gap);
-  justify-content: center;
-  flex-wrap: wrap;    /* Stacks on very small screens */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
+/* --- Vertical / Mobile View (Screens 768px wide or smaller) --- */
+@media (max-width: 768px) {
+  
+  /* 1. Push the text up and slightly center-left as seen in Untitled presentation.jpg */
+  .staggered-text {
+    bottom: auto;       /* Reset the desktop bottom position */
+    top: 15%;          /* Pulls text near the top of the hero image */
+    left: 15%;         /* Keeps a nice left margin */
+    font-size: 2.8rem; /* Makes text slightly smaller for mobile screens */
+  }
+
+  /* Reduce the stagger slightly if mobile screens are too narrow */
+  .line-2 {
+    padding-left: 1em; 
+  }
+  .line-3 {
+    padding-left: 2em; 
+  }
+
+  /* 2. Position the button perfectly at the bottom center */
+  .hero-actions {
+    top: auto;         /* Reset the desktop vertical center */
+    bottom: 12%;       /* Positions it neatly near the bottom edge */
+    left: 50%;         /* Horizontal centering step 1 */
+    transform: translateX(-50%); /* Horizontal centering step 2 */
+  }
+}
 
 /* ------------------------------------------------------------
    FEATURED CATEGORIES SECTION
