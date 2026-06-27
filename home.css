@@ -28,10 +28,12 @@
   /* background-color: var(--color-surface);   Placeholder — remove when using an image */
 }
 
+/*
 .hero-content {
   max-width: 640px;
   padding: var(--gap);
 }
+*/
 
 .hero-content h1 {
   margin-bottom: 1rem;
