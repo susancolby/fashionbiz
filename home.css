@@ -85,22 +85,27 @@
 @media (max-width: 768px) {
   
 .staggered-text {
-    /* 1. Clear out ALL bottom/right coordinates entirely */
-    bottom: auto !important; 
-    right: auto !important;
-    text-align: left !important; /* Forces the text engine to align left, not right */
+    /* 1. Break completely free from the parent container */
+    position: fixed !important; 
     
-    /* 2. Set the new top-left coordinates to pull it up and center it */
-    top: 15% !important;   
-    left: 15% !important;  /* Adjust this percentage to push it further left or right */
+    /* 2. Zero out any potential bottom/right overrides */
+    bottom: unset !important;
+    right: unset !important;
+    margin: 0 !important;
     
-    /* 3. Keep the sizing safe for mobile */
-    font-size: 2.5rem;       
-    display: flex;
-    flex-direction: column;
+    /* 3. Force it to the top-center area of the viewport */
+    top: 20% !important;   
+    left: 15% !important;  /* Higher = further right, Lower = further left */
+    
+    /* 4. Formatting safety nets */
+    text-align: left !important;
+    font-size: 2.6rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 100; /* Ensures it sits on top of the image */
   }
 
-  /* Keep the stagger tight so it doesn't drift right */
+  /* Keep the stagger tight so it doesn't push itself right */
   .line-1 { padding-left: 0 !important; }
   .line-2 { padding-left: 0.8em !important; }
   .line-3 { padding-left: 1.6em !important; }
