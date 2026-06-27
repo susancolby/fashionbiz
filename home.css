@@ -60,7 +60,7 @@
 .categories-grid {
   display: grid;
   gap: 0; /* Changed from var(--gap) to 0 to completely remove gaps */
-  width: 100%;
+  width: 100vw;
 }
 
 /* 2. Vertical Viewing (Portrait - Mobile/Tablets held vertically) */
