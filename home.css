@@ -85,11 +85,16 @@
 @media (max-width: 768px) {
   
   /* 1. Push the text up and slightly center-left as seen in Untitled presentation.jpg */
-  .staggered-text {
-    bottom: auto;       /* Reset the desktop bottom position */
-    top: 15%;          /* Pulls text near the top of the hero image */
-    left: 15%;         /* Keeps a nice left margin */
-    font-size: 2.8rem; /* Makes text slightly smaller for mobile screens */
+.staggered-text {
+    /* 1. Force the layout to look toward the top instead of the bottom */
+    bottom: auto !important; /* Overrides the desktop 'bottom' rule */
+    top: 18%;                /* Pushes it down slightly from the very top */
+    
+    /* 2. Shift it further right toward the center */
+    left: 20%;               /* Adjust this percentage to move it more right or left */
+    
+    /* 3. Scale down font & staggering so it doesn't clip on narrow screens */
+    font-size: 2.5rem;       /* Slightly smaller text prevents clipping */
   }
 
   /* Reduce the stagger slightly if mobile screens are too narrow */
