@@ -43,6 +43,36 @@
   font-size: 1.05rem;
 }
 
+.staggered-text {
+  position: absolute;
+  bottom: 15%;  /* Pulls it slightly up from the very bottom corner */
+  left: 8%;     /* Pulls it slightly out from the very left edge */
+  display: flex;
+  flex-direction: column;
+  
+  /* Font Styling to match the vibe */
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 4.5rem); /* Scales beautifully across devices */
+  color: #ffffff;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* 3. Create the staggered effect */
+.line-1 {
+  padding-left: 0;
+}
+
+.line-2 {
+  padding-left: 1.5em; /* Shifts the second word right */
+}
+
+.line-3 {
+  padding-left: 3em; /* Shifts the third word even further right */
+}
+
 /* Stacked button pair */
 .hero-actions {
   display: flex;
