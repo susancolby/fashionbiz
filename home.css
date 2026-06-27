@@ -9,71 +9,45 @@
    HERO SECTION
    Full-viewport banner at the top of the home page.
    ------------------------------------------------------------ */
-.hero {
-  min-height: calc(90vh - var(--nav-height));  /* Nearly full screen */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  /* --- Background ---
-     Replace this with your hero image:
-     background-image: url('images/hero.jpg');
-     background-size: cover;
-     background-position: center;
-  */
+hero {
+  min-height: calc(90vh - var(--nav-height));
+  
+  /* 1. CRITICAL: This anchors your absolute text and buttons inside the image */
+  position: relative; 
+  
   background-image: url("hero.jpeg");
   background-size: cover;
   background-position: center;
-  /* background-color: var(--color-surface);   Placeholder — remove when using an image */
 }
 
-/*
-.hero-content {
-  max-width: 640px;
-  padding: var(--gap);
-}
-*/
-
-.hero-content h1 {
-  margin-bottom: 1rem;
-}
-
-.hero-content p {
-  margin-inline: auto;   /* Centers the constrained paragraph */
-  margin-bottom: 2rem;
-  font-size: 1.05rem;
-}
+/* --- DESKTOP STYLING --- */
 
 .staggered-text {
   position: absolute;
-  bottom: 15%;  /* Pulls it slightly up from the very bottom corner */
-  left: 8%;     /* Pulls it slightly out from the very left edge */
+  /* 2. Lock it to the bottom left for desktop (IMG_0326.jpeg) */
+  bottom: 15%;  
+  left: 8%;     
+  right: auto;  /* Clears any accidental right pinning */
+  
   display: flex;
   flex-direction: column;
+  text-align: left; /* Overrides any centered inheriting text */
   
-  /* Font Styling to match the vibe */
-  font-family: 'Red Hat Display', sans-serif; /* Use your preferred italic/sans font */
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 600;
   font-style: italic;
-  font-size: clamp(2rem, 5vw, 4.5rem); /* Scales beautifully across devices */
+  font-size: clamp(2rem, 5vw, 4.5rem); 
   color: #ffffff;
   line-height: 1.1;
   text-transform: uppercase;
 }
 
-/* 3. Create the staggered effect */
-.line-1 {
-  padding-left: 0;
-}
+/* Staggered effect */
+.line-1 { padding-left: 0; }
+.line-2 { padding-left: 1.5em; }
+.line-3 { padding-left: 3em; }
 
-.line-2 {
-  padding-left: 1.5em; /* Shifts the second word right */
-}
-
-.line-3 {
-  padding-left: 3em; /* Shifts the third word even further right */
-}
-/* Stacked button pair */
+/* Desktop button placement (Centered) */
 .hero-actions {
   position: absolute;
   top: 50%;
@@ -81,15 +55,30 @@
   transform: translate(-50%, -50%);
 }
 
-/* --- Vertical / Mobile View (Screens 768px wide or smaller) --- */
+
+/* --- MOBILE / VERTICAL STYLING (Untitled presentation.jpg) --- */
 @media (max-width: 768px) {
+
+  .staggered-text {
+    /* 1. Force it away from the bottom and up to the top left/center */
+    bottom: auto !important; 
+    top: 15% !important;   
+    left: 15% !important;  /* Higher % pushes it closer to center, lower pushes left */
+    right: auto !important;
+    
+    /* 2. Tighten text & stagger so it fits on narrow portrait screens */
+    font-size: 2.8rem !important; 
+  }
+
+  .line-2 { padding-left: 0.8em !important; }
+  .line-3 { padding-left: 1.6em !important; }
 
   /* Position the button perfectly at the bottom center */
   .hero-actions {
-    top: auto;         /* Reset the desktop vertical center */
-    bottom: 12%;       /* Positions it neatly near the bottom edge */
-    left: 50%;         /* Horizontal centering step 1 */
-    transform: translateX(-50%); /* Horizontal centering step 2 */
+    top: auto !important;        
+    bottom: 12% !important;      
+    left: 50% !important;        
+    transform: translateX(-50%) !important; 
   }
 }
 
