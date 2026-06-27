@@ -84,26 +84,26 @@
 /* --- Vertical / Mobile View (Screens 768px wide or smaller) --- */
 @media (max-width: 768px) {
   
-  /* 1. Push the text up and slightly center-left as seen in Untitled presentation.jpg */
 .staggered-text {
-    /* 1. Force the layout to look toward the top instead of the bottom */
-    bottom: auto !important; /* Overrides the desktop 'bottom' rule */
-    top: 18%;                /* Pushes it down slightly from the very top */
+    /* 1. Clear out ALL bottom/right coordinates entirely */
+    bottom: auto !important; 
+    right: auto !important;
+    text-align: left !important; /* Forces the text engine to align left, not right */
     
-    /* 2. Shift it further right toward the center */
-    left: 20%;               /* Adjust this percentage to move it more right or left */
+    /* 2. Set the new top-left coordinates to pull it up and center it */
+    top: 15% !important;   
+    left: 15% !important;  /* Adjust this percentage to push it further left or right */
     
-    /* 3. Scale down font & staggering so it doesn't clip on narrow screens */
-    font-size: 2.5rem;       /* Slightly smaller text prevents clipping */
+    /* 3. Keep the sizing safe for mobile */
+    font-size: 2.5rem;       
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Reduce the stagger slightly if mobile screens are too narrow */
-  .line-2 {
-    padding-left: 1em; 
-  }
-  .line-3 {
-    padding-left: 2em; 
-  }
+  /* Keep the stagger tight so it doesn't drift right */
+  .line-1 { padding-left: 0 !important; }
+  .line-2 { padding-left: 0.8em !important; }
+  .line-3 { padding-left: 1.6em !important; }
 
   /* 2. Position the button perfectly at the bottom center */
   .hero-actions {
