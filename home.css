@@ -61,6 +61,11 @@
   display: grid;
   gap: 0; /* Changed from var(--gap) to 0 to completely remove gaps */
   width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 /* 2. Vertical Viewing (Portrait - Mobile/Tablets held vertically) */
