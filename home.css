@@ -9,7 +9,7 @@
    HERO SECTION
    Full-viewport banner at the top of the home page.
    ------------------------------------------------------------ */
-hero {
+.hero {
   min-height: calc(90vh - var(--nav-height));
   
   /* 1. CRITICAL: This anchors your absolute text and buttons inside the image */
