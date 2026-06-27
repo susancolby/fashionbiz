@@ -83,34 +83,8 @@
 
 /* --- Vertical / Mobile View (Screens 768px wide or smaller) --- */
 @media (max-width: 768px) {
-  
-.staggered-text {
-    /* 1. Break completely free from the parent container */
-    position: fixed !important; 
-    
-    /* 2. Zero out any potential bottom/right overrides */
-    bottom: unset !important;
-    right: unset !important;
-    margin: 0 !important;
-    
-    /* 3. Force it to the top-center area of the viewport */
-    top: 20% !important;   
-    left: 15% !important;  /* Higher = further right, Lower = further left */
-    
-    /* 4. Formatting safety nets */
-    text-align: left !important;
-    font-size: 2.6rem !important;
-    display: flex !important;
-    flex-direction: column !important;
-    z-index: 100; /* Ensures it sits on top of the image */
-  }
 
-  /* Keep the stagger tight so it doesn't push itself right */
-  .line-1 { padding-left: 0 !important; }
-  .line-2 { padding-left: 0.8em !important; }
-  .line-3 { padding-left: 1.6em !important; }
-
-  /* 2. Position the button perfectly at the bottom center */
+  /* Position the button perfectly at the bottom center */
   .hero-actions {
     top: auto;         /* Reset the desktop vertical center */
     bottom: 12%;       /* Positions it neatly near the bottom edge */
