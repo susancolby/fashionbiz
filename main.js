@@ -126,6 +126,7 @@ window.Cart = (function () {
     document.getElementById('cart-overlay').classList.add('open');
     document.getElementById('cart-drawer').classList.add('open');
     document.body.style.overflow = 'hidden';  // Prevent page scroll behind drawer
+    renderCartItems();
   }
 
   // Close the cart
