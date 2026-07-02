@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  _render(); // Re-populate drawer from localStorage on every page load
+  renderCartItems(); // Re-populate drawer from localStorage on every page load
    
 });
 
