@@ -216,6 +216,7 @@ window.Cart = (function () {
   /* ---- Init: run on every page load ---- */
   document.addEventListener('DOMContentLoaded', function () {
     updateBadge();
+    renderCartItems();
 
     // Close drawer when clicking the overlay
     const overlay = document.getElementById('cart-overlay');
