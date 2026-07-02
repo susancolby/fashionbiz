@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  _render(); // Re-populate drawer from localStorage on every page load
+   
 });
 
 /* ============================================================
