@@ -14,10 +14,10 @@
   
   /* 1. CRITICAL: This anchors your absolute text and buttons inside the image */
   position: relative; 
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: center;
-  /* text-align: center; */
+  text-align: center; */
   background-image: url("hero.jpeg");
   background-size: cover;
   background-position: center;
