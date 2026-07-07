@@ -31,7 +31,8 @@
   bottom: 15%;  
   left: 8%;     
   right: auto;  /* Clears any accidental right pinning */
-  
+  top: auto;
+  transform: none;
   display: flex;
   flex-direction: column;
   text-align: left; /* Overrides any centered inheriting text */
