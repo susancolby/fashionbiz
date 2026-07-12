@@ -10,6 +10,7 @@
    ------------------------------------------------------------ */
 .about-hero {
   padding-block: calc(var(--gap) * 3);
+  height: 75vh;
   text-align: center;
   position: relative; 
   background-image: url("about.jpeg");
