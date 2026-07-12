@@ -68,7 +68,7 @@
   .staggered-text {
     /* 1. Force it away from the bottom and up to the top left/center */
     bottom: auto !important; 
-    top: 23% !important;   
+    top: 38% !important;   
     left: 8% !important;  /* Higher % pushes it closer to center, lower pushes left */
     right: auto !important;
     line-height: 1.4;
