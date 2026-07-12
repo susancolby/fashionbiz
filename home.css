@@ -67,11 +67,11 @@
     /* 1. Force it away from the bottom and up to the top left/center */
     bottom: auto !important; 
     top: 15% !important;   
-    left: 15% !important;  /* Higher % pushes it closer to center, lower pushes left */
+    left: 10% !important;  /* Higher % pushes it closer to center, lower pushes left */
     right: auto !important;
-    
+    line-height: 1.7;
     /* 2. Tighten text & stagger so it fits on narrow portrait screens */
-    font-size: 4rem; 
+    font-size: 5rem; 
   }
 
   .line-2 { padding-left: 0.4em !important; }
