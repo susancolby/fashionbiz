@@ -11,18 +11,57 @@
 .about-hero {
   padding-block: calc(var(--gap) * 3);
   text-align: center;
-  background-color: var(--color-surface);
+  position: relative; 
+  background-image: url("about.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- DESKTOP STYLING --- */
+
+.staggered-text {
+  position: absolute;
+  /* 2. Lock it to the bottom left for desktop (IMG_0326.jpeg) */
+  bottom: 15%;  
+  left: 8%;     
+  right: auto;  /* Clears any accidental right pinning */
+  top: auto;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  text-align: left; /* Overrides any centered inheriting text */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10 and Edge */
+  user-select: none;         /* Standard syntax (Chrome, Firefox, Opera) */
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2rem, 8vw, 4.5rem); 
+  color: #ffffff;
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
 .about-hero h1 {
+  position: absolute;
   margin-bottom: 1rem;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10 and Edge */
+  user-select: none;         /* Standard syntax (Chrome, Firefox, Opera) */
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2rem, 8vw, 4.5rem); 
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
+/*
 .about-hero p {
   margin-inline: auto;
   font-size: 1.05rem;
 }
-
+*/
 
 /* ------------------------------------------------------------
    ABOUT BODY — two-column text + image layout
