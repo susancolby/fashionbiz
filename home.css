@@ -36,7 +36,9 @@
   display: flex;
   flex-direction: column;
   text-align: left; /* Overrides any centered inheriting text */
-  
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10 and Edge */
+  user-select: none;         /* Standard syntax (Chrome, Firefox, Opera) */
   font-family: 'Red Hat Display', sans-serif;
   font-weight: 600;
   font-style: italic;
@@ -67,15 +69,15 @@
     /* 1. Force it away from the bottom and up to the top left/center */
     bottom: auto !important; 
     top: 15% !important;   
-    left: 10% !important;  /* Higher % pushes it closer to center, lower pushes left */
+    left: 8% !important;  /* Higher % pushes it closer to center, lower pushes left */
     right: auto !important;
     line-height: 1.7;
     /* 2. Tighten text & stagger so it fits on narrow portrait screens */
     font-size: 5rem; 
   }
 
-  .line-2 { padding-left: 0.4em !important; }
-  .line-3 { padding-left: 0.8em !important; }
+  .line-2 { padding-left: 0.2em !important; }
+  .line-3 { padding-left: 0.4em !important; }
 
   /* Position the button perfectly at the bottom center */
   .hero-actions {
