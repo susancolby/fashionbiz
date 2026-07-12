@@ -68,7 +68,7 @@
   .staggered-text {
     /* 1. Force it away from the bottom and up to the top left/center */
     bottom: auto !important; 
-    top: 15% !important;   
+    top: 18% !important;   
     left: 8% !important;  /* Higher % pushes it closer to center, lower pushes left */
     right: auto !important;
     line-height: 1.7;
@@ -76,8 +76,8 @@
     font-size: 5rem; 
   }
 
-  .line-2 { padding-left: 0.2em !important; }
-  .line-3 { padding-left: 0.4em !important; }
+  .line-2 { padding-left: 0em !important; }
+  .line-3 { padding-left: 0em !important; }
 
   /* Position the button perfectly at the bottom center */
   .hero-actions {
