@@ -30,7 +30,7 @@
   -ms-user-select: none;     /* IE 10 and Edge */
   user-select: none;         /* Standard syntax (Chrome, Firefox, Opera) */
   font-family: 'Red Hat Display', sans-serif;
-  font-weight: 550;
+  font-weight: 500;
   font-style: italic;
   display: flex;
   flex-direction: column;
